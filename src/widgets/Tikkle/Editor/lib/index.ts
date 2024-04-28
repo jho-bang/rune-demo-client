@@ -13,7 +13,6 @@ export function canvasInit(
   newImage?: HTMLImageElement,
 ) {
   const ctx = getCanvasContext(target);
-
   const width = image.naturalWidth;
   const height = image.naturalHeight;
 

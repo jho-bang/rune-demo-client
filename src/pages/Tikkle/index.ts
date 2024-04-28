@@ -30,10 +30,29 @@ export class TikklePage extends Page<object> {
     }
   }
 
-  override async onMount() {
+  async imageListViewRender() {
     const images = await apis.getList();
-    const imageListView = new ImageListView(images).render();
+    const imageListView = new ImageListView([
+      ...images,
+      ...images,
+      ...images,
+    ]).render();
     this.element().append(imageListView);
+  }
+
+  imageSelectViewRender() {
+    const imageSelect = new ImageSelectView({
+      text: "이미지를 업로드해주세용",
+      accept: "image/*",
+      onChange: this.onFileChange,
+    }).render();
+
+    this.element().append(imageSelect);
+  }
+
+  override async onRender() {
+    this.imageSelectViewRender();
+    await this.imageListViewRender();
   }
 
   onFileChange(file: File) {
@@ -51,16 +70,6 @@ export class TikklePage extends Page<object> {
   }
 
   override template() {
-    return html`
-      <div id="workspace" class="${style.main}">
-        <div>
-          ${new ImageSelectView({
-            text: "이미지를 업로드해주세용",
-            accept: "image/png, image/jpeg",
-            onChange: this.onFileChange,
-          })}
-        </div>
-      </div>
-    `;
+    return html` <div id="workspace" class="${style.main}"></div> `;
   }
 }

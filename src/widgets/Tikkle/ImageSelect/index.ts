@@ -6,6 +6,7 @@ import { EditorView } from "../Editor";
 
 // style
 import style from "./style.module.scss";
+import { OnFileSelect } from "../../../features/Tikkle";
 
 interface Props {
   text: string;
@@ -16,18 +17,25 @@ interface Props {
 export class ImageSelectView extends View<Props> {
   uploadElemId = `file-upload-${Math.random().toString()}`;
 
+  private showEditorView(file: File) {
+    document.querySelector("#workspace")!.innerHTML = "";
+    document
+      .querySelector("#workspace")!
+      .append(new EditorView({ file }).render());
+  }
+
+  @on(OnFileSelect)
+  private _onFileSelect(file: File) {
+    this.showEditorView(file);
+  }
+
   @on("change", `input`)
   private _onChange(ev) {
     const file = ev.currentTarget.files?.[0];
 
     if (file) {
       const onChanged = this.data.onChange(file);
-      if (onChanged) {
-        document.querySelector("#workspace")!.innerHTML = "";
-        document
-          .querySelector("#workspace")!
-          .append(new EditorView({ file }).render());
-      }
+      if (onChanged) this.showEditorView(file);
     }
   }
 

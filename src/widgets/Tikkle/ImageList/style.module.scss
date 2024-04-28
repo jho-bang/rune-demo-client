@@ -1,21 +1,19 @@
 .imageList {
-  flex: 0 0 120px;
+  display: inline-block; // 2
+  width: 100%; // 3
+  break-inside: avoid; // 4
+
+  transition:
+    transform 0.2s ease-in-out,
+    opacity 0.2s ease-in-out;
+  opacity: 0.6;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
 
   & img {
-    width: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    transition:
-      transform 0.2s ease-in-out,
-      opacity 0.2s ease-in-out;
-    overflow: hidden;
-    opacity: 0.6;
-    cursor: pointer;
-
-    &:hover {
-      opacity: 1;
-    }
+    width: 100%;
   }
 }
