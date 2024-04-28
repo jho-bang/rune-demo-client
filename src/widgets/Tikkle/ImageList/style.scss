@@ -1,0 +1,10 @@
+.ImageListView {
+  display: flex;
+  //flex-direction: column;
+  flex-wrap: wrap;
+  align-content: start;
+  /* 코드를 변경해가며 테스트해보세요! */
+  // height: 1000px;
+  max-height: 1000px;
+  padding: 10px;
+}

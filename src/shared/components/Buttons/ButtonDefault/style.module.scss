@@ -1,0 +1,43 @@
+@import '../button_base';
+
+.mp_btn {
+  font-size: $mp-button-content-font-size;
+  line-height: $mp-button-content-line-height;
+  padding: $mp-button-padding-block $mp-button-padding-inline;
+  border-radius: $mp-border-radius;
+  box-shadow: $mp-button-default-shadow;
+
+  background-color: $mp-button-default-bg;
+  border: $mp-line-width $mp-line-type transparent;
+  cursor: pointer;
+  transition: all $mp-motion-duration-mid $mp-motion-ease-in-out;
+  user-select: none;
+  touch-action: manipulation;
+  color: $mp-color-text;
+
+  &:hover {
+    border-color: $mp-blue;
+    color: $mp-blue;
+  }
+
+  &.primary {
+    color: $mp-button-primary-color;
+    background-color: $mp-color-primary;
+    box-shadow: $mp-button-primary-shadow;
+
+    &:hover {
+      color: $mp-color-primary-hover;
+      background-color: $mp-color-primary-bg-hover;
+    }
+  }
+
+  &.danger {
+    color: $mp-button-danger-color;
+    background-color: $mp-red-5;
+    box-shadow: $mp-button-danger-shadow;
+
+    &:hover {
+      border-color: $mp-red-5;
+    }
+  }
+}
