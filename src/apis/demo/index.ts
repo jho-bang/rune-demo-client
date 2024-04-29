@@ -1,9 +1,9 @@
-import type { ICreateImage, IUploadImage } from "../../features/types/tikkle";
+import type { ICreateImage, IDemoList, IUploadImage } from "./types";
 
 const BASE_URL = `http://localhost:5002`;
 
 export const apis = {
-  async getList() {
+  async getList(): Promise<IDemoList[]> {
     const res = await fetch(`${BASE_URL}/api/v1/demo`, {
       method: "GET",
       headers: {

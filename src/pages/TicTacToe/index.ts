@@ -1,16 +1,16 @@
 import { Page, html, on } from "rune-ts";
 
-// widgets
-import {
-  SquareListViewRender,
-  resetButtonRender,
-} from "../../widgets/TicTacToe";
-
-// features
-import { ticTacToeStore, RequestEvent } from "../../features";
-
 // style
 import mainClass from "./style.module.scss";
+
+// widgets
+import { resetButtonRender, SquareListViewRender } from "../../widgets";
+
+// stores
+import { ticTacToeStore } from "../../stores";
+
+// shared
+import { RequestEvent } from "../../shared";
 
 export class TicTacToePage extends Page<object> {
   @on(RequestEvent)

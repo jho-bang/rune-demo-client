@@ -3,22 +3,21 @@ import { Page, html, on } from "rune-ts";
 
 // style
 import style from "./style.module.scss";
+import { SIZE_10MB } from "./consts";
 
 // widgets
 import {
   FloatView,
   ImageListView,
   ImageSelectView,
-} from "../../widgets/Tikkle";
-
-// features
-import { IsLoading, OnFileSelect } from "../../features";
+  OnFileSelect,
+} from "../../widgets";
 
 // apis
 import { apis } from "../../apis";
 
 // shared
-import { LoadingView, SIZE_10MB } from "../../shared";
+import { IsLoading, LoadingView } from "../../shared";
 
 export class TikklePage extends Page<object> {
   @on(IsLoading)
