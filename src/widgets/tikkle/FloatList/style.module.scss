@@ -1,9 +1,10 @@
-@import "../../app/style/style_base";
+@import "../../../app/style/style_base";
 
 .float {
   position: fixed;
   right: 20px;
   bottom: 20px;
+  z-index: 99;
 
   & .float-item {
     background: $mp-color-primary;
