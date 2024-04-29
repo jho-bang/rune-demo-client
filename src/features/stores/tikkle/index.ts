@@ -1,18 +1,18 @@
 import { pipe, each, filter } from "@fxts/core";
-import type { ISetStore, IStore } from "../types";
+import type { ITikkleStore, ITikkleSetStore } from "../../types";
 
-const initialValues: IStore = {
+const initialValues: ITikkleStore = {
   isLoading: false,
   originImage: "",
   newImage: "",
 };
 
-class Store {
+class TikkleStore {
   isLoading: boolean;
   originImage: string;
   newImage: string;
 
-  constructor({ isLoading, originImage, newImage }: IStore) {
+  constructor({ isLoading, originImage, newImage }: ITikkleStore) {
     this.isLoading = isLoading;
     this.originImage = originImage;
     this.newImage = newImage;
@@ -26,7 +26,7 @@ class Store {
     };
   }
 
-  setStore(data: ISetStore) {
+  setStore(data: ITikkleSetStore) {
     pipe(
       Object.entries(data),
       filter(([key, value]) => typeof value === "boolean" || value),
@@ -39,4 +39,4 @@ class Store {
   }
 }
 
-export const store = new Store(initialValues);
+export const tikkleStore = new TikkleStore(initialValues);

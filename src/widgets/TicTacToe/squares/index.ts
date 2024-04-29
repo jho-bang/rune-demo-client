@@ -2,11 +2,8 @@
 import { ListView, View, html, on } from "rune-ts";
 import { pipe, filter, map, takeWhile, toArray, range } from "@fxts/core";
 
-// store
-import { store } from "../../../features/TicTacToe/store";
-
-// events
-import { RequestEvent } from "../../../features/TicTacToe/events";
+// features
+import { ticTacToeStore, RequestEvent } from "../../../features";
 
 // css
 import style from "./style.module.scss";
@@ -32,17 +29,17 @@ export class SquareView extends View<Props> {
   }
 
   private isEndGame() {
-    return store.getStore().isEndGame;
+    return ticTacToeStore.getStore().isEndGame;
   }
 
   private setIsEndGame(isEndGame: boolean) {
-    store.setStore({ isEndGame });
+    ticTacToeStore.setStore({ isEndGame });
   }
 
   private updateSquares(ev: Event) {
     const currentTarget = ev.currentTarget as HTMLElement;
     if (currentTarget) {
-      currentTarget.textContent = store.getStore().currentPlayer;
+      currentTarget.textContent = ticTacToeStore.getStore().currentPlayer;
     }
 
     const squares = pipe(
@@ -51,15 +48,16 @@ export class SquareView extends View<Props> {
       toArray,
     );
 
-    store.setStore({ squares });
+    ticTacToeStore.setStore({ squares });
   }
 
   private setCurrentPlayer() {
-    store.setStore({
+    ticTacToeStore.setStore({
       currentPlayer:
-        store.getStore().currentPlayer === store.getStore().players[0]
-          ? store.getStore().players[1]
-          : store.getStore().players[0],
+        ticTacToeStore.getStore().currentPlayer ===
+        ticTacToeStore.getStore().players[0]
+          ? ticTacToeStore.getStore().players[1]
+          : ticTacToeStore.getStore().players[0],
     });
   }
 
@@ -73,7 +71,7 @@ export class SquareView extends View<Props> {
 
   private checkWin() {
     if (this.isWin()) {
-      alert(`${store.getStore().currentPlayer} 승리`);
+      alert(`${ticTacToeStore.getStore().currentPlayer} 승리`);
       return true;
     }
 
@@ -81,14 +79,14 @@ export class SquareView extends View<Props> {
   }
 
   private isWin() {
-    const { currentPlayer, squares } = store.getStore();
+    const { currentPlayer, squares } = ticTacToeStore.getStore();
     const compareSquare = ([a, b, c]: number[]) =>
       squares[a] === currentPlayer &&
       squares[b] === currentPlayer &&
       squares[c] === currentPlayer;
 
     const result = pipe(
-      store.getStore()["winning_combinations"],
+      ticTacToeStore.getStore()["winning_combinations"],
       filter(compareSquare),
       takeWhile((v) => v.length),
       toArray,
@@ -98,7 +96,7 @@ export class SquareView extends View<Props> {
   }
 
   private checkDraw() {
-    const squares = store.getStore().squares;
+    const squares = ticTacToeStore.getStore().squares;
     if (this.isDraw(squares)) {
       alert("무승부");
       return true;

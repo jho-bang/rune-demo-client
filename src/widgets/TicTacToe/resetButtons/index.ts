@@ -2,12 +2,14 @@
 import { View, html, on } from "rune-ts";
 import { pipe, each } from "@fxts/core";
 
-// store
-import { store } from "../../../features/TicTacToe/store";
+// features
+import { ticTacToeStore } from "../../../features";
+
+// shared
+import { ButtonDefault } from "../../../shared";
 
 // css
 import style from "./style.module.scss";
-import { ButtonDefault } from "../../../shared/components";
 
 interface Props {}
 
@@ -17,7 +19,7 @@ export class ResetButtonView extends View<Props> {
     pipe(
       document.querySelectorAll(".square"),
       each((v) => (v.textContent = "")),
-      () => store.resetStore(),
+      () => ticTacToeStore.resetStore(),
     );
   }
 

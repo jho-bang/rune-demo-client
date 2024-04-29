@@ -24,7 +24,7 @@ export async function inpaint({ width, height, image, mask }) {
     sd_sampler: "DPM++ 2M",
   };
 
-  const res = await fetch(`http://localhost:8081/api/v1/inpaint`, {
+  const res = await fetch(`http://localhost:8080/api/v1/inpaint`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

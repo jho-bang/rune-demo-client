@@ -4,20 +4,21 @@ import { Page, html, on } from "rune-ts";
 // style
 import style from "./style.module.scss";
 
-// lib
-import { SIZE_10MB } from "./lib/consts";
-
 // widgets
-import { ImageSelectView, ImageListView } from "../../widgets/Tikkle";
+import {
+  FloatView,
+  ImageListView,
+  ImageSelectView,
+} from "../../widgets/Tikkle";
 
 // features
-import { IsLoading } from "../../features/Tikkle/lib";
+import { IsLoading, OnFileSelect } from "../../features";
 
-// entities
-import { apis } from "../../entities";
+// apis
+import { apis } from "../../apis";
 
 // shared
-import { LoadingView } from "../../shared";
+import { LoadingView, SIZE_10MB } from "../../shared";
 
 export class TikklePage extends Page<object> {
   @on(IsLoading)
@@ -32,30 +33,15 @@ export class TikklePage extends Page<object> {
 
   async imageListViewRender() {
     const images = await apis.getList();
-    const imageListView = new ImageListView([
-      ...images,
-      ...images,
-      ...images,
-    ]).render();
+    const imageListView = new ImageListView(images).render();
     this.element().append(imageListView);
   }
 
-  imageSelectViewRender() {
-    const imageSelect = new ImageSelectView({
-      text: "이미지를 업로드해주세용",
-      accept: "image/*",
-      onChange: this.onFileChange,
-    }).render();
-
-    this.element().append(imageSelect);
-  }
-
   override async onRender() {
-    this.imageSelectViewRender();
     await this.imageListViewRender();
   }
 
-  onFileChange(file: File) {
+  private onFileChange(file: File) {
     if (!file) {
       return false;
     }
@@ -69,7 +55,39 @@ export class TikklePage extends Page<object> {
     return file.size <= SIZE_10MB;
   }
 
+  @on(OnFileSelect)
+  private _onFileSelect(ev) {
+    const file = ev.detail;
+    this.element().innerHTML = "";
+    this.element().append(
+      new FloatView({
+        floatList: [
+          new ImageSelectView({
+            file,
+            text: "이미지를 업로드해주세용.",
+            accept: "image/*",
+            onChange: this.onFileChange,
+          }),
+        ],
+      }).render(),
+    );
+  }
+
   override template() {
-    return html` <div id="workspace" class="${style.main}"></div> `;
+    return html`
+      <div id="workspace" class="${style.main}">
+        <div>
+          ${new FloatView({
+            floatList: [
+              new ImageSelectView({
+                text: "이미지를 업로드해주세용.",
+                accept: "image/*",
+                onChange: this.onFileChange,
+              }),
+            ],
+          })}
+        </div>
+      </div>
+    `;
   }
 }

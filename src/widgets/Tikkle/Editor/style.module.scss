@@ -4,7 +4,7 @@
   height: 100vh;
 
   & canvas {
-    clip-path: inset(0 10% 0 0);
+    clip-path: inset(0 1% 0 0);
     transition: clip-path 100ms;
   }
 }
@@ -21,7 +21,7 @@
   right: 20px;
 
   & .on {
-    content: '수정본 보기';
+    content: "수정본 보기";
   }
 }
 
@@ -31,4 +31,14 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.back_btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+
+  & svg {
+    color: white;
+  }
 }

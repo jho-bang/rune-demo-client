@@ -4,14 +4,17 @@ import { View, html, on } from "rune-ts";
 // widgets
 import { EditorView } from "../Editor";
 
+// shared
+import { EditorAddIcon } from "../../../shared";
+
 // style
 import style from "./style.module.scss";
-import { OnFileSelect } from "../../../features/Tikkle";
 
 interface Props {
   text: string;
   accept: string;
   onChange(file: File): boolean;
+  file?: File;
 }
 
 export class ImageSelectView extends View<Props> {
@@ -24,9 +27,10 @@ export class ImageSelectView extends View<Props> {
       .append(new EditorView({ file }).render());
   }
 
-  @on(OnFileSelect)
-  private _onFileSelect(file: File) {
-    this.showEditorView(file);
+  override onMount() {
+    if (this.data.file) {
+      this.showEditorView(this.data.file);
+    }
   }
 
   @on("change", `input`)
@@ -40,9 +44,9 @@ export class ImageSelectView extends View<Props> {
   }
 
   override template() {
-    return html`<div class="${style.fileSelect}">
+    return html`<div>
       <label class="${style.fileSelectLabel}" htmlFor="${this.uploadElemId}">
-        <div class="${style.fileInput}">
+        <div>
           <input
             class="${style.hidden}"
             id="${this.uploadElemId}"
@@ -51,7 +55,7 @@ export class ImageSelectView extends View<Props> {
             accept=${this.data.accept}
           />
 
-          <p class="${style["text-center"]}">${this.data.text}</p>
+          <div class="${style.icon}">${EditorAddIcon}</div>
         </div>
       </label>
     </div> `;

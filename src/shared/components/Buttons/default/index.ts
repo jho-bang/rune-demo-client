@@ -15,7 +15,7 @@ export class ButtonDefault extends View<Props> {
   class = this.data.class;
   type = this.data.type || 'default';
 
-  getTypeToClass() {
+  typeToStyle() {
     switch (this.type) {
       case 'primary':
         return style.primary;
@@ -28,7 +28,7 @@ export class ButtonDefault extends View<Props> {
 
   override template() {
     return html`<button
-      class="${this.class} ${style.mp_btn} ${this.getTypeToClass()}"
+      class="${this.class} ${style.mp_btn} ${this.typeToStyle()}"
     >
       ${this.text}
     </button> `;

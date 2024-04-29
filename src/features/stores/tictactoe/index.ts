@@ -2,9 +2,13 @@
 import { pipe, each, filter } from "@fxts/core";
 
 // type
-import type { ISetStore, IStore, TPlayers } from "../types";
+import type {
+  ITicTacToeStore,
+  ITicTacToeSetStore,
+  TPlayers,
+} from "../../types";
 
-const initialValues: IStore = {
+const initialValues: ITicTacToeStore = {
   players: ["X", "O"],
   winning_combinations: [
     [0, 1, 2],
@@ -21,7 +25,7 @@ const initialValues: IStore = {
   isEndGame: false,
 };
 
-class Store {
+class TicTacToeStore {
   players: TPlayers[];
   winning_combinations: number[][];
   squares: string[];
@@ -34,7 +38,7 @@ class Store {
     squares,
     currentPlayer,
     isEndGame,
-  }: IStore) {
+  }: ITicTacToeStore) {
     this.players = players;
     this.winning_combinations = winning_combinations;
     this.squares = squares;
@@ -42,7 +46,7 @@ class Store {
     this.isEndGame = isEndGame;
   }
 
-  getStore(): IStore {
+  getStore(): ITicTacToeStore {
     return {
       players: this.players,
       winning_combinations: this.winning_combinations,
@@ -52,7 +56,7 @@ class Store {
     };
   }
 
-  setStore(data: ISetStore) {
+  setStore(data: ITicTacToeSetStore) {
     pipe(
       Object.entries(data),
       filter(([key, value]) => typeof value === "boolean" || value),
@@ -65,4 +69,4 @@ class Store {
   }
 }
 
-export const store = new Store(initialValues);
+export const ticTacToeStore = new TicTacToeStore(initialValues);

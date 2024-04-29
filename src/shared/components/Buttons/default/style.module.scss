@@ -1,8 +1,8 @@
-@import '../button_base';
+@import "../../../../app/style/style_base";
 
 .mp_btn {
   font-size: $mp-button-content-font-size;
-  line-height: $mp-button-content-line-height;
+  line-height: 1;
   padding: $mp-button-padding-block $mp-button-padding-inline;
   border-radius: $mp-border-radius;
   box-shadow: $mp-button-default-shadow;

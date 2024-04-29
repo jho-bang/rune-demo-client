@@ -1,5 +1,5 @@
 import { pipe, each, filter } from "@fxts/core";
-import { ISetStore, IStore } from "../types/index.js";
+import { ISetStore, IStore } from "../../types/tikkle/index.js";
 const initialValues = {
   isLoading: false,
 };

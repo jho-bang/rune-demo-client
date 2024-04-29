@@ -1,7 +1,4 @@
-import type {
-  ICreateImage,
-  IUploadImage,
-} from "../../features/Tikkle/lib/types";
+import type { ICreateImage, IUploadImage } from "../../features/types/tikkle";
 
 const BASE_URL = `http://localhost:5002`;
 

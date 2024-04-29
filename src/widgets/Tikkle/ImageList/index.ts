@@ -1,12 +1,13 @@
 import { html, ListView, on, View } from "rune-ts";
 
-import { OnFileSelect } from "../../../features/Tikkle";
-import { convertURLtoFile } from "../../../shared";
+import { onClickImageItem } from "./lib";
+
+// features
+import { OnFileSelect } from "../../../features";
 
 // style
 import style from "./style.module.scss";
 import "./style.scss";
-import { apis } from "../../../entities";
 
 interface IProps {
   origin_src: string;
@@ -14,12 +15,8 @@ interface IProps {
 
 export class ImageItemView extends View<IProps> {
   @on("click")
-  private async _click(ev) {
-    const target = ev.currentTarget;
-    const image = target.querySelector("img");
-    const src = image.getAttribute("src");
-    const file = await convertURLtoFile(src);
-
+  private async _click(ev: Event) {
+    const file = await onClickImageItem(ev);
     this.dispatchEvent(OnFileSelect, { detail: file, bubbles: true });
   }
 

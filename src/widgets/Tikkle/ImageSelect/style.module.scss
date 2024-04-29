@@ -1,36 +1,11 @@
-.fileSelect {
-  justify-content: center;
-  align-items: center;
-
-  pointer-events: none;
-}
-
 .fileSelectLabel {
-  background-color: #000;
-  border-width: 2px;
-  display: grid;
-  pointer-events: auto;
-
-  .fileInput {
-    padding: 30px;
-    width: 100%;
-    height: 100%;
-  }
-
   .hidden {
     display: none;
   }
 
-  .text-center {
-    text-align: center;
-    color: #eee;
-  }
-
-  &:hover {
-    background-color: #faf026;
-
-    .text-center {
-      color: #000;
+  .icon {
+    & svg {
+      color: #eee;
     }
   }
 }
