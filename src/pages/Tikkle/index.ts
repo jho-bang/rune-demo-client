@@ -17,13 +17,13 @@ import {
 import { apis } from "../../apis";
 
 // shared
-import { IsLoading, LoadingView } from "../../shared";
+import { AutoComplete, IsLoading, LoadingView } from "../../shared";
 
 export class TikklePage extends Page<object> {
   @on(IsLoading)
   private _isLoading({ detail: loading }) {
     if (loading) {
-      const element = new LoadingView({}).render();
+      const element = new LoadingView({ text: "로딩중..." }).render();
       this.element().append(element);
     } else {
       this.element().querySelector(".LoadingView")?.remove();
@@ -38,6 +38,7 @@ export class TikklePage extends Page<object> {
 
   override async onRender() {
     await this.imageListViewRender();
+    this.element().append(new AutoComplete({ dataSource: [] }).render());
   }
 
   private onFileChange(file: File) {

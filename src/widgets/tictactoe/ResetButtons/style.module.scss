@@ -1,17 +1,5 @@
 .restartButton {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  height: 40px;
   width: 150px;
-  background-color: #ffffff;
-  border: 1px solid #000000;
-  border-radius: 40px;
-  font-size: 18px;
-  margin-top: 20px;
-}
-
-.restartButton:hover {
-  background-color: #000000;
-  color: #ffffff;
+  margin: 20px auto 0 auto;
+  text-align: center;
 }

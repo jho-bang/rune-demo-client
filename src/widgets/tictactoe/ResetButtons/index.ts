@@ -14,8 +14,7 @@ import { ButtonDefault } from "../../../shared";
 interface Props {}
 
 export class ResetButtonView extends View<Props> {
-  @on("click")
-  private _click() {
+  private onClick() {
     pipe(
       document.querySelectorAll(".square"),
       each((v) => (v.textContent = "")),
@@ -25,11 +24,12 @@ export class ResetButtonView extends View<Props> {
 
   override template() {
     return html`
-      <div>
+      <div class="${style.restartButton}">
         ${new ButtonDefault({
           text: "다시 시작",
-          class: `${style.restartButton}`,
           type: "primary",
+          onClick: this.onClick,
+          size: "large",
         })}
       </div>
     `;

@@ -1,4 +1,4 @@
-import { html, on, View } from "rune-ts";
+import { html, View } from "rune-ts";
 
 import { onShowOriginClick } from "./lib";
 import { onErase } from "./model";
@@ -19,8 +19,7 @@ interface Props {}
 export class EditorFloatList extends View<Props> {
   isShowOrigin: boolean = false;
 
-  @on("click", ".float-list .float-item > .show_origin")
-  private async _show() {
+  private async onShowOriginClick() {
     try {
       this.isShowOrigin = await onShowOriginClick(this.isShowOrigin);
     } catch (e) {
@@ -28,16 +27,17 @@ export class EditorFloatList extends View<Props> {
     }
   }
 
-  @on("click", ".float-list .float-item > .erase_tikkle")
-  private async _click() {
-    try {
-      this.dispatchEvent(IsLoading, { detail: true, bubbles: true });
-      await onErase();
-    } catch (e) {
-      console.log(e);
-    } finally {
-      this.dispatchEvent(IsLoading, { detail: false, bubbles: true });
-    }
+  private onEraseClick() {
+    return async () => {
+      try {
+        this.dispatchEvent(IsLoading, { detail: true, bubbles: true });
+        await onErase();
+      } catch (e) {
+        console.log(e);
+      } finally {
+        this.dispatchEvent(IsLoading, { detail: false, bubbles: true });
+      }
+    };
   }
 
   override template() {
@@ -49,10 +49,12 @@ export class EditorFloatList extends View<Props> {
               class: `show_origin`,
               icon: EditorImageIcon,
               type: "primary",
+              onClick: this.onShowOriginClick,
             }),
             new ButtonIcon({
               class: `erase_tikkle`,
               icon: WikiEditIcon,
+              onClick: this.onEraseClick(),
             }),
           ],
         })}

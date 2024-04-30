@@ -15,8 +15,7 @@ export class BackBtnView extends View<Props> {
         ${new ButtonIcon({
           type: "primary",
           icon: ArrowLeftIcon,
-          class: "",
-          onclick: () => {
+          onClick: () => {
             window.location.reload();
           },
         })}
