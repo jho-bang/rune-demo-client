@@ -4,6 +4,7 @@ import { pipe, filter, map, takeWhile, toArray, range } from "@fxts/core";
 
 // css
 import style from "./style.module.scss";
+import "./style.scss";
 
 // stores
 import { ticTacToeStore } from "../../../stores";

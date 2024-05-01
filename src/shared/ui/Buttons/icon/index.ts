@@ -21,7 +21,7 @@ export class ButtonIcon extends View<IconButtonProps> {
     if (this.data.onClick) this.data.onClick();
   }
 
-  override template() {
+  override template({}: IconButtonProps) {
     return html`<button
       class="${this.class} ${style.mp_btn} ${style[this.type]} ${style[
         this.size

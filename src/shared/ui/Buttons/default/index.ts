@@ -1,4 +1,4 @@
-import { View, html, on } from "rune-ts";
+import { View, html } from "rune-ts";
 
 import style from "./style.module.scss";
 
@@ -13,20 +13,20 @@ export interface DefaultBtnProps {
 }
 
 export class ButtonDefault extends View<DefaultBtnProps> {
-  text = this.data.text;
-  type = this.data.type || "default";
-  size = this.data.size || "large";
-
   override onMount() {
     if (this.data.onClick) {
       this.addEventListener("click", this.data.onClick);
     }
   }
 
-  override template() {
+  override template({
+    size = "default",
+    text,
+    type = "default",
+  }: DefaultBtnProps) {
     return html`
-      <button class="${style.mp_btn} ${style[this.type]} ${style[this.size]}">
-        ${this.text}
+      <button class="${style.mp_btn} ${style[type]} ${style[size]}">
+        ${text}
       </button>
     `;
   }
