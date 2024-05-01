@@ -1,14 +1,14 @@
 import { html, View } from "rune-ts";
 import style from "./style.module.scss";
 
-interface Props<T> {
+export interface IAutoCompleteProps<T> {
   dataSource: Array<{
     label: string;
     value: T;
   }>;
 }
 
-export class AutoComplete<T> extends View<Props<T>> {
+export class AutoComplete<T> extends View<IAutoCompleteProps<T>> {
   private onInput(e) {
     const value = e.target.value;
     this.closeAllList();
@@ -52,6 +52,7 @@ export class AutoComplete<T> extends View<Props<T>> {
         type="text"
         name="myCountry"
         placeholder="Country"
+        class="${style.autocomplete_input}"
       />
       <div id="autocomplete-list" class="${style.autocompleteItems}"></div>
     </div>`;

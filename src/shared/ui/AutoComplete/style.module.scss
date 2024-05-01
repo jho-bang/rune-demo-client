@@ -1,6 +1,17 @@
+@import "../../../app/style/base.scss";
+
 .autocomplete {
   position: relative;
   display: inline-block;
+  height: $mp-control-height;
+  font-size: $mp-font-size;
+
+  & .autocomplete_input {
+    border: $mp-line-width $mp-line-type $mp-color-border;
+    background: $mp-select-selector-bg;
+    padding: $mp-padding-sm;
+    border-radius: $mp-border-radius;
+  }
 
   & .autocompleteItems {
     position: absolute;
