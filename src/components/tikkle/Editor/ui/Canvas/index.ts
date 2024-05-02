@@ -3,7 +3,7 @@ import { html, on, View } from "rune-ts";
 // style
 import style from "./style.module.scss";
 
-import { onMouseDown, onMouseMove } from "./lib";
+import { getCanvasContext } from "../../share";
 
 interface Props {}
 
@@ -13,7 +13,12 @@ export class EditorCanvas extends View<Props> {
   @on("mousedown", "#brush_canvas")
   private _mouseDown(ev: MouseEvent) {
     this.isDrag = true;
-    onMouseDown(ev);
+    const ctx = getCanvasContext("#brush_canvas");
+
+    if (ctx) {
+      ctx.beginPath();
+      ctx.moveTo(ev.offsetX, ev.offsetY);
+    }
   }
 
   @on("mouseup", "#brush_canvas")
@@ -23,7 +28,20 @@ export class EditorCanvas extends View<Props> {
 
   @on("mousemove", "#brush_canvas")
   private _mouseMove(ev: MouseEvent) {
-    if (this.isDrag) onMouseMove(ev);
+    if (this.isDrag) {
+      const ctx = getCanvasContext("#brush_canvas");
+      if (ctx) {
+        if (ev.buttons === 1) {
+          ctx.lineTo(ev.offsetX, ev.offsetY);
+          ctx.strokeStyle = "#faf026";
+          ctx.lineWidth = 20;
+          ctx.lineCap = "round";
+          ctx.lineJoin = "round";
+
+          ctx.stroke();
+        }
+      }
+    }
   }
 
   override template() {

@@ -1,23 +1,46 @@
 // base
-import { ListView, View, html, on } from "rune-ts";
-import { pipe, filter, map, takeWhile, toArray, range } from "@fxts/core";
+import { ListView, View, html, on, CustomEventWithDetail } from "rune-ts";
+import { pipe, filter, map, takeWhile, toArray } from "@fxts/core";
 
 // css
 import style from "./style.module.scss";
 import "./style.scss";
 
-// stores
-import { ticTacToeStore } from "../../../stores";
+import type { ITicTacToeStore, TPlayers } from "../../../types";
 
-// shared
-import { RequestEvent } from "../../../shared";
+export class RequestEvent extends CustomEventWithDetail<TPlayers> {}
 
 interface Props {
   value: number;
 }
 
 export class SquareView extends View<Props> {
-  @on("click")
+  override template({ value }: Props) {
+    return html`<div class="${style.square} square" id="square${value}"></div>`;
+  }
+}
+
+const initialValues: ITicTacToeStore = {
+  players: ["X", "O"],
+  winning_combinations: [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ],
+  squares: [],
+  currentPlayer: "X",
+  isEndGame: false,
+};
+
+export class SquareListView extends ListView<Props, SquareView> {
+  state: ITicTacToeStore = JSON.parse(JSON.stringify(initialValues));
+
+  @on("click", `.${SquareView}`)
   private _click(ev: MouseEvent) {
     if (this.isEndGame() || this.isExists(ev)) return;
 
@@ -29,21 +52,25 @@ export class SquareView extends View<Props> {
     }
 
     this.setCurrentPlayer();
-    this.dispatchEvent(RequestEvent, { bubbles: true });
+
+    this.dispatchEvent(RequestEvent, {
+      detail: this.state.currentPlayer,
+      bubbles: true,
+    });
   }
 
   private isEndGame() {
-    return ticTacToeStore.getStore().isEndGame;
+    return this.state.isEndGame;
   }
 
   private setIsEndGame(isEndGame: boolean) {
-    ticTacToeStore.setStore({ isEndGame });
+    this.state.isEndGame = isEndGame;
   }
 
   private updateSquares(ev: Event) {
     const currentTarget = ev.currentTarget as HTMLElement;
     if (currentTarget) {
-      currentTarget.textContent = ticTacToeStore.getStore().currentPlayer;
+      currentTarget.textContent = this.state.currentPlayer;
     }
 
     const squares = pipe(
@@ -52,17 +79,14 @@ export class SquareView extends View<Props> {
       toArray,
     );
 
-    ticTacToeStore.setStore({ squares });
+    this.state.squares = squares;
   }
 
   private setCurrentPlayer() {
-    ticTacToeStore.setStore({
-      currentPlayer:
-        ticTacToeStore.getStore().currentPlayer ===
-        ticTacToeStore.getStore().players[0]
-          ? ticTacToeStore.getStore().players[1]
-          : ticTacToeStore.getStore().players[0],
-    });
+    this.state.currentPlayer =
+      this.state.currentPlayer === this.state.players[0]
+        ? this.state.players[1]
+        : this.state.players[0];
   }
 
   private isExists(ev: MouseEvent) {
@@ -75,7 +99,7 @@ export class SquareView extends View<Props> {
 
   private checkWin() {
     if (this.isWin()) {
-      alert(`${ticTacToeStore.getStore().currentPlayer} 승리`);
+      alert(`${this.state.currentPlayer} 승리`);
       return true;
     }
 
@@ -83,14 +107,14 @@ export class SquareView extends View<Props> {
   }
 
   private isWin() {
-    const { currentPlayer, squares } = ticTacToeStore.getStore();
+    const { currentPlayer, squares } = this.state;
     const compareSquare = ([a, b, c]: number[]) =>
       squares[a] === currentPlayer &&
       squares[b] === currentPlayer &&
       squares[c] === currentPlayer;
 
     const result = pipe(
-      ticTacToeStore.getStore()["winning_combinations"],
+      this.state.winning_combinations,
       filter(compareSquare),
       takeWhile((v) => v.length),
       toArray,
@@ -100,7 +124,7 @@ export class SquareView extends View<Props> {
   }
 
   private checkDraw() {
-    const squares = ticTacToeStore.getStore().squares;
+    const squares = this.state.squares;
     if (this.isDraw(squares)) {
       alert("무승부");
       return true;
@@ -119,22 +143,9 @@ export class SquareView extends View<Props> {
     return true;
   }
 
-  override template({ value }: Props) {
-    return html`<div class="${style.square} square" id="square${value}"></div>`;
-  }
-}
+  resetState = () => {
+    this.state = JSON.parse(JSON.stringify(initialValues));
+  };
 
-export class SquareListView extends ListView<Props, SquareView> {
   override ItemView = SquareView;
-}
-
-export function SquareListViewRender() {
-  const listValue = pipe(
-    range(0, 9),
-    map((v) => ({ value: v })),
-    toArray,
-  );
-
-  const element = new SquareListView(listValue).render();
-  document.querySelector("#board")!.append(element);
 }

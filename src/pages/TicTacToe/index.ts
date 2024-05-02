@@ -1,36 +1,42 @@
 import { Page, html, on } from "rune-ts";
-
-// style
-import mainClass from "./style.module.scss";
+import { map, pipe, range, toArray } from "@fxts/core";
 
 // components
-import { resetButtonRender, SquareListViewRender } from "../../components";
-
-// stores
-import { ticTacToeStore } from "../../stores";
-
-// shared
-import { RequestEvent } from "../../shared";
+import {
+  RequestEvent,
+  ResetButtonView,
+  SquareListView,
+  StateView,
+  TitleView,
+} from "../../components";
 
 export class TicTacToePage extends Page<object> {
+  stateView = new StateView({ currentPlayer: "X" });
+  squareListView = new SquareListView(
+    pipe(
+      range(0, 9),
+      map((v) => ({ value: v })),
+      toArray,
+    ),
+  );
+  resetButtonView = new ResetButtonView({
+    reset: this.squareListView.resetState,
+  });
+
   @on(RequestEvent)
-  private _on() {
-    this.element().querySelector(".status")!.innerHTML =
-      `${ticTacToeStore.getStore().currentPlayer} 차례`;
+  private _on(ev: RequestEvent) {
+    this.stateView.data.currentPlayer = ev.detail;
+    this.stateView.redraw();
   }
 
   override template() {
     return html`<div>
-      <h1 class="${mainClass.title}">와아 틱택토!</h1>
-      <h3 class="${mainClass.status} status">
-        ${ticTacToeStore.getStore().currentPlayer} 차례
-      </h3>
-      <div id="board"></div>
+      <div>${new TitleView({ title: "와아 틱택토!" })}</div>
+      <div>${this.stateView}</div>
+      <div id="board">
+        <div>${this.squareListView}</div>
+        <div>${this.resetButtonView}</div>
+      </div>
     </div>`;
-  }
-
-  override onRender() {
-    SquareListViewRender();
-    resetButtonRender();
   }
 }
