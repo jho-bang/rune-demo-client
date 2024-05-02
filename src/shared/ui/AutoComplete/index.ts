@@ -6,6 +6,7 @@ export interface IAutoCompleteProps<T> {
     label: string;
     value: T;
   }>;
+  placeholder?: string;
 }
 
 export class AutoComplete<T> extends View<IAutoCompleteProps<T>> {
@@ -21,10 +22,7 @@ export class AutoComplete<T> extends View<IAutoCompleteProps<T>> {
     input!.parentNode!.appendChild(div);
 
     this.data.dataSource.forEach((item) => {
-      if (
-        item.label.substring(0, value.length).toUpperCase() ===
-        value.toUpperCase()
-      ) {
+      if (item.label.substring(0, value.length).includes(value)) {
         const _div = document.createElement("div");
         _div.innerHTML = `<strong>${item.label.substring(0, value.length)}</strong>${item.label.substring(value.length)}`;
         _div.addEventListener("click", () => {
@@ -45,13 +43,12 @@ export class AutoComplete<T> extends View<IAutoCompleteProps<T>> {
     }
   }
 
-  override template() {
+  override template({ placeholder = "placeholder" }: IAutoCompleteProps<T>) {
     return html`<div class="${style.autocomplete}">
       <input
         id="autocomplete-input"
         type="text"
-        name="myCountry"
-        placeholder="Country"
+        placeholder="${placeholder}"
         class="${style.autocomplete_input}"
       />
       <div id="autocomplete-list" class="${style.autocompleteItems}"></div>

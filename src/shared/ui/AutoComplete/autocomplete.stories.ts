@@ -11,12 +11,20 @@ export default {
 const defaultStories: IAutoCompleteProps<string> = {
   dataSource: [
     {
-      label: "A",
-      value: "a",
+      label: "Lucy",
+      value: "Lucy",
     },
     {
-      label: "B",
-      value: "b",
+      label: "Tom",
+      value: "Tom",
+    },
+    {
+      label: "Jack",
+      value: "Jack",
+    },
+    {
+      label: "Jason",
+      value: "Jason",
     },
   ],
 };

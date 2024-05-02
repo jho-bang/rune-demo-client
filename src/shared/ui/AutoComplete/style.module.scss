@@ -15,19 +15,19 @@
 
   & .autocompleteItems {
     position: absolute;
-    border: 1px solid #d4d4d4;
-    border-bottom: none;
-    border-top: none;
-    z-index: 99;
-    top: 100%;
+    z-index: $mp-z-index-base;
+    top: 140%;
     left: 0;
     right: 0;
+    overflow: hidden;
+    background-color: $mp-color-bg-elevated;
+    border-radius: $mp-border-radius;
+    box-shadow: $mp-box-shadow-secondary;
 
     & div {
-      padding: 10px;
+      padding: $mp-padding-sm;
       cursor: pointer;
-      background-color: #fff;
-      border-bottom: 1px solid #d4d4d4;
+      transition: all $mp-motion-duration-mid $mp-motion-ease-in-out;
 
       &:hover {
         background-color: #e9e9e9;

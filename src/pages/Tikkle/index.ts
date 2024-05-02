@@ -17,7 +17,7 @@ import {
 import { apis } from "../../apis";
 
 // shared
-import { AutoComplete, IsLoading, LoadingView } from "../../shared";
+import { IsLoading, LoadingView } from "../../shared";
 
 export class TikklePage extends Page<object> {
   @on(IsLoading)
@@ -38,52 +38,6 @@ export class TikklePage extends Page<object> {
 
   override async onRender() {
     await this.imageListViewRender();
-    this.element().append(
-      new AutoComplete({
-        dataSource: [
-          {
-            label: "a",
-            value: 2,
-          },
-          {
-            label: "a",
-            value: 2,
-          },
-          {
-            label: "a",
-            value: 2,
-          },
-          {
-            label: "a",
-            value: 2,
-          },
-          {
-            label: "B",
-            value: 2,
-          },
-          {
-            label: "B",
-            value: 2,
-          },
-          {
-            label: "B",
-            value: 2,
-          },
-          {
-            label: "B",
-            value: 2,
-          },
-          {
-            label: "B",
-            value: 2,
-          },
-          {
-            label: "B",
-            value: 2,
-          },
-        ],
-      }).render(),
-    );
   }
 
   private onFileChange(file: File) {
