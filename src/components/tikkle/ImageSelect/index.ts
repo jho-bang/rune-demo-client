@@ -21,10 +21,11 @@ export class ImageSelectView extends View<Props> {
   uploadElemId = `file-upload-${Math.random().toString()}`;
 
   private showEditorView(file: File) {
-    document.querySelector("#workspace")!.innerHTML = "";
-    document
-      .querySelector("#workspace")!
-      .append(new EditorView({ file }).render());
+    const workspace = document.querySelector("#workspace");
+    if (workspace) {
+      workspace.innerHTML = "";
+      workspace.append(new EditorView({ file }).render());
+    }
   }
 
   override onMount() {

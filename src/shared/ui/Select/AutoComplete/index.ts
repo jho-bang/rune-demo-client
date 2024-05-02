@@ -1,6 +1,6 @@
 import { html, View } from "rune-ts";
-import style from "./style.module.scss";
 import { pipe, filter, each } from "@fxts/core";
+import style from "./style.module.scss";
 
 export interface IAutoCompleteProps<T> {
   placeholder?: string;
@@ -61,11 +61,14 @@ export class AutoComplete<T> extends View<IAutoCompleteProps<T>> {
   }
 
   override onMount() {
-    const thisElem = this.element().querySelector("input");
-
-    thisElem!.addEventListener("keyup", (e) => this.onInput(e));
-    thisElem!.addEventListener("focusout", () =>
-      setTimeout(this.closeAllList, 100),
+    const autoCompleteInput = this.element().querySelector(
+      "#autocomplete-input",
     );
+    if (autoCompleteInput) {
+      autoCompleteInput.addEventListener("keyup", (e) => this.onInput(e));
+      autoCompleteInput.addEventListener("focusout", () =>
+        setTimeout(this.closeAllList, 100),
+      );
+    }
   }
 }

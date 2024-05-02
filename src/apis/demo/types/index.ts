@@ -13,7 +13,11 @@ export interface IUploadImage {
 export interface IDemoList {
   id: number;
   origin_src: string;
-  new_src?: string;
   created: Date;
   updated?: Date;
+}
+
+export interface IGetDemoList {
+  limit?: number;
+  skip?: number;
 }

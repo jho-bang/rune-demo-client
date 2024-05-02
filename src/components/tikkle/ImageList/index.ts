@@ -5,7 +5,7 @@ import style from "./style.module.scss";
 import "./style.scss";
 
 // shared
-import { convertURLtoFile } from "../../../shared";
+import { convertURLtoFile, BASE_URL } from "../../../shared";
 
 export class OnFileSelect extends CustomEventWithDetail<File> {}
 
@@ -30,7 +30,7 @@ export class ImageItemView extends View<IProps> {
   override template() {
     return html`
       <div class="${style.imageList} grid-item">
-        <img src="http://localhost:5002/${this.data.origin_src}" alt="" />
+        <img src="${BASE_URL}/${this.data.origin_src}" alt="" />
       </div>
     `;
   }

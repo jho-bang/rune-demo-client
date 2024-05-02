@@ -30,13 +30,9 @@ export class TikklePage extends Page<{}> {
   }
 
   async imageListViewRender() {
-    const images = await apis.getList();
+    const images = await apis.getList({});
     const imageListView = new ImageListView(images).render();
     this.element().append(imageListView);
-  }
-
-  override async onRender() {
-    await this.imageListViewRender();
   }
 
   private onFileChange(file: File) {
@@ -69,6 +65,10 @@ export class TikklePage extends Page<{}> {
         ],
       }).render(),
     );
+  }
+
+  override async onRender() {
+    await this.imageListViewRender();
   }
 
   override template() {

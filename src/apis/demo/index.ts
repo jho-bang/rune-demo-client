@@ -1,10 +1,19 @@
-import type { ICreateImage, IDemoList, IUploadImage } from "./types";
+import type {
+  ICreateImage,
+  IDemoList,
+  IGetDemoList,
+  IUploadImage,
+} from "./types";
 
-const BASE_URL = `http://localhost:5002`;
+import { BASE_URL } from "../../shared";
 
 export const apis = {
-  async getList(): Promise<IDemoList[]> {
-    const res = await fetch(`${BASE_URL}/api/v1/demo`, {
+  async getList(query: IGetDemoList = {}): Promise<IDemoList[]> {
+    const queryStr = Object.entries(query)
+      .map(([key, value]) => `${key}=${value}`)
+      .join("&");
+
+    const res = await fetch(`${BASE_URL}/api/v1/demo?${queryStr}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
