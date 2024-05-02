@@ -23,6 +23,7 @@
     background-color: $mp-color-bg-elevated;
     border-radius: $mp-border-radius;
     box-shadow: $mp-box-shadow-secondary;
+    transition: all $mp-motion-duration-mid $mp-motion-ease-in-out;
 
     & div {
       padding: $mp-padding-sm;

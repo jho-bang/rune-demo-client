@@ -1,12 +1,14 @@
 import { html, View } from "rune-ts";
 import style from "./style.module.scss";
+import { pipe, filter, each } from "@fxts/core";
 
 export interface IAutoCompleteProps<T> {
+  placeholder?: string;
+  onChange: (value: T) => void;
   dataSource: Array<{
     label: string;
     value: T;
   }>;
-  placeholder?: string;
 }
 
 export class AutoComplete<T> extends View<IAutoCompleteProps<T>> {
@@ -21,17 +23,20 @@ export class AutoComplete<T> extends View<IAutoCompleteProps<T>> {
     div.setAttribute("class", style.autocompleteItems);
     input!.parentNode!.appendChild(div);
 
-    this.data.dataSource.forEach((item) => {
-      if (item.label.substring(0, value.length).includes(value)) {
+    pipe(
+      this.data.dataSource,
+      filter((item) => item.label.substring(0, value.length).includes(value)),
+      each((item) => {
         const _div = document.createElement("div");
         _div.innerHTML = `<strong>${item.label.substring(0, value.length)}</strong>${item.label.substring(value.length)}`;
         _div.addEventListener("click", () => {
-          e.target.value = item.label;
+          e.target.value = item.value;
+          this.data.onChange(item.value);
           this.closeAllList();
         });
         div.appendChild(_div);
-      }
-    });
+      }),
+    );
   }
 
   private closeAllList() {
@@ -55,11 +60,12 @@ export class AutoComplete<T> extends View<IAutoCompleteProps<T>> {
     </div>`;
   }
 
-  override onRender() {
-    this.element()
-      .querySelector("input")!
-      .addEventListener("keyup", (e) => {
-        this.onInput(e);
-      });
+  override onMount() {
+    const thisElem = this.element().querySelector("input");
+
+    thisElem!.addEventListener("keyup", (e) => this.onInput(e));
+    thisElem!.addEventListener("focusout", () =>
+      setTimeout(this.closeAllList, 100),
+    );
   }
 }

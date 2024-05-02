@@ -1,14 +1,21 @@
 import { AutoComplete, type IAutoCompleteProps } from "./index";
+import { action } from "@storybook/addon-actions";
 
 export default {
-  title: "AutoComplete",
+  title: "Select",
   tags: ["autodocs"],
+  argTypes: {
+    placeholder: { control: "text" },
+    onChange: { action: "onChange" },
+  },
   render: (args: IAutoCompleteProps<string>) => {
     return new AutoComplete(args).render();
   },
 };
 
 const defaultStories: IAutoCompleteProps<string> = {
+  onChange: action("onChange"),
+  placeholder: "placeholder",
   dataSource: [
     {
       label: "Lucy",
@@ -29,6 +36,6 @@ const defaultStories: IAutoCompleteProps<string> = {
   ],
 };
 
-export const Auto_complete = {
+export const Auto_Complete = {
   args: defaultStories,
 };
