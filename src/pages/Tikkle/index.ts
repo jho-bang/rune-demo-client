@@ -29,7 +29,7 @@ export class TikklePage extends Page<{}> {
     }
   }
 
-  async imageListViewRender() {
+  private async imageListViewRender() {
     const images = await apis.getList({});
     const imageListView = new ImageListView(images).render();
     this.element().append(imageListView);
