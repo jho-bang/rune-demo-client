@@ -2,7 +2,7 @@ import { ButtonDefault, type DefaultBtnProps } from "./index";
 import { action } from "@storybook/addon-actions";
 
 export default {
-  title: "Default Button",
+  title: "Button",
   tags: ["autodocs"],
   argTypes: {
     type: {

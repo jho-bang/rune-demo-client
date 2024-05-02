@@ -3,8 +3,8 @@ import { Page, html, on } from "rune-ts";
 // style
 import mainClass from "./style.module.scss";
 
-// widgets
-import { resetButtonRender, SquareListViewRender } from "../../widgets";
+// components
+import { resetButtonRender, SquareListViewRender } from "../../components";
 
 // stores
 import { ticTacToeStore } from "../../stores";

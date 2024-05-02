@@ -1,3 +1,3 @@
 export * from "./Buttons";
 export * from "./Loading";
-export * from "./AutoComplete";
+export * from "./Select";

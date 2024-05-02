@@ -3,7 +3,7 @@ import { html, View } from "rune-ts";
 import { onShowOriginClick } from "./lib";
 import { onErase } from "./model";
 
-// widgets
+// components
 import { FloatView } from "../../../FloatList";
 
 // shared

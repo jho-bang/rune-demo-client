@@ -4,7 +4,7 @@ import { View, html, on } from "rune-ts";
 // style
 import style from "./style.module.scss";
 
-// widgets
+// components
 import { EditorView } from "../Editor";
 
 // shared
