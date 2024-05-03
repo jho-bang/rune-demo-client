@@ -1,10 +1,13 @@
 import { html, View } from "rune-ts";
 import { ButtonIcon } from "../icon";
 import { ArrowLeftIcon, ArrowRightIcon } from "../../../assets";
+import type { ButtonSize, ButtonType } from "../default";
 
 export interface IArrowButtonProps {
   direction?: "left" | "right";
   onClick?: () => void;
+  type?: ButtonType;
+  size?: ButtonSize;
 }
 
 export class ArrowButtonView extends View<IArrowButtonProps> {
@@ -12,9 +15,10 @@ export class ArrowButtonView extends View<IArrowButtonProps> {
     return html`
       <div>
         ${new ButtonIcon({
-          type: "primary",
           icon: this.data.direction === "left" ? ArrowLeftIcon : ArrowRightIcon,
           onClick: this.data.onClick,
+          type: this.data.type,
+          size: this.data.size,
         })}
       </div>
     `;

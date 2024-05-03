@@ -1,5 +1,5 @@
 import { html, View } from "rune-ts";
-import type { TPlayers } from "../../../types";
+import type { TPlayers } from "../../../../../types";
 
 import style from "./style.module.scss";
 

@@ -1,10 +1,14 @@
-import { ButtonDefault, type DefaultBtnProps } from "./index";
+import { ArrowButtonView, type IArrowButtonProps } from "./index";
 import { action } from "@storybook/addon-actions";
 
 export default {
   title: "Button",
   tags: ["autodocs"],
   argTypes: {
+    direction: {
+      options: ["left", "right"],
+      control: { type: "select" },
+    },
     type: {
       options: ["primary", "default", "danger"],
       control: { type: "select" },
@@ -15,18 +19,18 @@ export default {
     },
     onClick: { action: "clicked" },
   },
-  render: (args: DefaultBtnProps) => {
-    return new ButtonDefault(args).render();
+  render: (args: IArrowButtonProps) => {
+    return new ArrowButtonView(args).render();
   },
 };
 
-const defaultBtnStories: DefaultBtnProps = {
-  text: "Button",
+const stories: IArrowButtonProps = {
+  direction: "left",
   type: "default",
   size: "default",
   onClick: action("clicked"),
 };
 
-export const Default_Button = {
-  args: defaultBtnStories,
+export const arrow_Button = {
+  args: stories,
 };

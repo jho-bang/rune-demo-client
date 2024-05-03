@@ -25,3 +25,8 @@ export interface IGetDemoList {
   limit?: number;
   skip?: number;
 }
+
+export interface ILogin {
+  email: string;
+  password: string;
+}

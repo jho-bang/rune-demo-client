@@ -7,7 +7,7 @@ import {
   IsLoading,
   loadImage,
   WikiEditIcon,
-  FloatView,
+  FloatListView,
 } from "../../../../../shared";
 
 // oragnisms
@@ -22,6 +22,9 @@ import {
 } from "../../lib";
 
 import { apis, inpaint } from "../../../../../apis";
+
+// style
+import style from "./style.module.scss";
 
 interface Props {}
 
@@ -96,21 +99,23 @@ export class EditorFloatListView extends View<Props> {
   override template() {
     return html`
       <div>
-        ${new FloatView({
-          floatList: [
-            new ButtonIcon({
-              class: `show_origin`,
+        ${new FloatListView([
+          {
+            item: new ButtonIcon({
+              klass: style.ButtonIcon,
               icon: EditorImageIcon,
               type: "primary",
               onClick: this.onShowOriginClick,
             }),
-            new ButtonIcon({
-              class: `erase_tikkle`,
+          },
+          {
+            item: new ButtonIcon({
+              klass: style.ButtonIcon,
               icon: WikiEditIcon,
               onClick: this.onEraseClick,
             }),
-          ],
-        })}
+          },
+        ])}
       </div>
     `;
   }

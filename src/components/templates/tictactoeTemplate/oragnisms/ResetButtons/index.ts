@@ -6,7 +6,7 @@ import { pipe, each } from "@fxts/core";
 import style from "./style.module.scss";
 
 // shared
-import { ButtonDefault } from "../../../shared";
+import { ButtonDefault } from "../../../../../shared";
 
 interface Props {
   reset: () => void;

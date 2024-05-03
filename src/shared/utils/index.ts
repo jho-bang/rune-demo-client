@@ -33,3 +33,24 @@ export async function convertURLtoFile(url: string) {
   const metadata = { type: `image/${ext}` };
   return new File([data], filename!, metadata);
 }
+
+export function qs(obj: object) {
+  return Object.entries(obj)
+    .map(([k, v]) => {
+      if (typeof v === "boolean" || v) {
+        return `${k}=${v}`;
+      }
+    })
+    .join("&");
+}
+
+export function getCookie(name: string) {
+  let matches = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+        "=([^;]*)",
+    ),
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}

@@ -4,21 +4,11 @@ import { pipe, filter, map, takeWhile, toArray } from "@fxts/core";
 
 // css
 import style from "./style.module.scss";
-import "./style.scss";
 
-import type { ITicTacToeStore, TPlayers } from "../../../types";
+import type { ITicTacToeStore, TPlayers } from "../../../../../types";
+import { type ISquareItemProps, SquareView } from "./atoms/SquareItem";
 
 export class RequestEvent extends CustomEventWithDetail<TPlayers> {}
-
-interface Props {
-  value: number;
-}
-
-export class SquareView extends View<Props> {
-  override template({ value }: Props) {
-    return html`<div class="${style.square} square" id="square${value}"></div>`;
-  }
-}
 
 const initialValues: ITicTacToeStore = {
   players: ["X", "O"],
@@ -37,7 +27,9 @@ const initialValues: ITicTacToeStore = {
   isEndGame: false,
 };
 
-export class SquareListView extends ListView<Props, SquareView> {
+export class SquareListView extends ListView<ISquareItemProps, SquareView> {
+  override className = style.SquareListView;
+
   state: ITicTacToeStore = JSON.parse(JSON.stringify(initialValues));
 
   @on("click", `.${SquareView}`)

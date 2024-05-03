@@ -5,7 +5,7 @@ import { View, html } from "rune-ts";
 import { ImageSelectView, ImageListView } from "./oragnisms";
 
 // shared
-import { FloatView } from "../../../shared";
+import { FloatListView } from "../../../shared";
 
 // apis
 import type { IDemoItem } from "../../../apis/demo/types";
@@ -19,14 +19,14 @@ export class HomeTemplate extends View<Props> {
     return html`
       <div>${new ImageListView(this.data.images)}</div>
       <div>
-        ${new FloatView({
-          floatList: [
-            new ImageSelectView({
+        ${new FloatListView([
+          {
+            item: new ImageSelectView({
               text: "이미지를 업로드해주세용.",
               accept: "image/*",
             }),
-          ],
-        })}
+          },
+        ])}
       </div>
     `;
   }

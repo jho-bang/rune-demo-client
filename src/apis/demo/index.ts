@@ -6,15 +6,23 @@ import type {
   IUploadImage,
 } from "./types";
 
-import { BASE_URL } from "../../shared";
+import { BASE_URL, getCookie, qs } from "../../shared";
 
 export const apis = {
-  async getList(query: IGetDemoList = {}): Promise<IDemoList> {
-    const queryStr = Object.entries(query)
-      .map(([key, value]) => `${key}=${value}`)
-      .join("&");
+  async kakao_profile() {
+    const res = await fetch(`${BASE_URL}/api/v1/user/kakao/profile`, {
+      method: "GET",
+      headers: {
+        access_token: getCookie("access_token") || "",
+        "Content-Type": "application/json",
+      },
+    });
 
-    const res = await fetch(`${BASE_URL}/api/v1/demo?${queryStr}`, {
+    return await res.json();
+  },
+
+  async getList(query: IGetDemoList = {}): Promise<IDemoList> {
+    const res = await fetch(`${BASE_URL}/api/v1/demo?${qs(query)}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

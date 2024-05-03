@@ -2,7 +2,7 @@
 import { Page, html, on } from "rune-ts";
 
 // templates
-import { DetailTemplateView } from "../../components/templates";
+import { DetailTemplateView } from "../../components";
 
 // shared
 import { IsLoading, LoadingView } from "../../shared";

@@ -1,0 +1,66 @@
+@import "../../../../app/style/base";
+
+.mp_btn {
+  padding: $mp-button-padding-block $mp-button-padding-inline;
+  border-radius: $mp-border-radius;
+  box-shadow: $mp-button-default-shadow;
+
+  line-height: 1;
+
+  background-color: $mp-button-default-bg;
+  border: $mp-line-width $mp-line-type transparent;
+  cursor: pointer;
+  transition: all $mp-motion-duration-mid $mp-motion-ease-in-out;
+  user-select: none;
+  touch-action: manipulation;
+  color: $mp-color-text;
+
+  &:hover {
+    border-color: $mp-blue;
+    color: $mp-blue;
+  }
+
+  &.primary {
+    color: $mp-button-primary-color;
+    background-color: $mp-color-primary;
+    box-shadow: $mp-button-primary-shadow;
+
+    &:hover {
+      color: $mp-color-primary-hover;
+      background-color: $mp-color-primary-bg-hover;
+    }
+  }
+
+  &.danger {
+    color: $mp-color-error;
+    border-color: $mp-color-error;
+    box-shadow: $mp-button-danger-shadow;
+
+    &:hover {
+      color: $mp-color-error-hover;
+      border-color: $mp-color-error-hover;
+    }
+  }
+
+  & svg {
+    width: $mp-button-only-icon-size;
+  }
+}
+
+.large {
+  padding: $mp-button-padding-block-lg $mp-button-padding-inline-lg;
+  border-radius: $mp-border-radius-lg;
+
+  & svg {
+    width: $mp-button-only-icon-size-lg;
+  }
+}
+
+.small {
+  padding: $mp-button-padding-block-sm $mp-button-padding-inline-sm;
+  border-radius: $mp-border-radius-sm;
+
+  & svg {
+    width: $mp-button-only-icon-size-sm;
+  }
+}

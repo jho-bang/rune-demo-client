@@ -14,6 +14,8 @@ export class BackBtnView extends View<Props> {
       <div class="${style.back_btn}">
         ${new ArrowButtonView({
           direction: "left",
+          type: "primary",
+          size: "large",
           onClick: () => {
             window.location.href = "/";
           },
