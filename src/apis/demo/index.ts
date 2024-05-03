@@ -3,17 +3,18 @@ import type {
   IDemoItem,
   IDemoList,
   IGetDemoList,
+  IProfile,
   IUploadImage,
 } from "./types";
 
 import { BASE_URL, getCookie, qs } from "../../shared";
 
 export const apis = {
-  async kakao_profile() {
+  async kakao_profile(access_token: string): Promise<IProfile> {
     const res = await fetch(`${BASE_URL}/api/v1/user/kakao/profile`, {
       method: "GET",
       headers: {
-        access_token: getCookie("access_token") || "",
+        access_token: access_token,
         "Content-Type": "application/json",
       },
     });

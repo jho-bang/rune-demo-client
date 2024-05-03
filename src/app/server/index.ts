@@ -24,7 +24,7 @@ server.get(ClientRouter["/tictactoe"].toString(), (req, res) => {
   return res.send(html);
 });
 
-server.get(ClientRouter[""].toString(), async (req, res) => {
+server.get(ClientRouter[""].toString(), async (req: any, res) => {
   const layoutData: LayoutData = {
     head: {
       title: "튜토리얼-티끌 제거기",
@@ -33,16 +33,27 @@ server.get(ClientRouter[""].toString(), async (req, res) => {
   };
   res.locals.layoutData = layoutData;
 
-  const { data } = await apis.getList();
+  const cookies = req.headers.cookie;
+  const getCookie = cookies
+    .split("; ")
+    .filter((cookie: string) => cookie.includes("access_token"));
 
-  const html = new MetaView(
-    ClientRouter[""]({
-      images: data,
-    }),
-    res.locals.layoutData,
-  ).toHtml();
+  if (getCookie.length) {
+    const access_token = getCookie[0].split("=")[1];
+    const { data } = await apis.getList();
+    const profile = await apis.kakao_profile(access_token);
+    const html = new MetaView(
+      ClientRouter[""]({
+        images: data,
+        profile,
+      }),
+      res.locals.layoutData,
+    ).toHtml();
 
-  return res.send(html);
+    return res.send(html);
+  }
+
+  return res.send("error");
 });
 
 server.get(ClientRouter["/login"].toString(), async (req, res) => {

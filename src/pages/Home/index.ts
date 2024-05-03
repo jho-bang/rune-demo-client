@@ -8,15 +8,14 @@ import style from "./style.module.scss";
 import { HomeTemplate } from "../../components";
 
 // apis
-import type { IDemoItem } from "../../apis/demo/types";
-import { apis } from "../../apis";
+import type { IDemoItem, IProfile } from "../../apis/demo/types";
 
 export class TikklePage extends Page<{
   images: IDemoItem[];
+  profile: IProfile;
 }> {
   override async onRender() {
-    const res = await apis.kakao_profile();
-    console.log(res);
+    console.log(this.data.profile);
   }
 
   override template() {

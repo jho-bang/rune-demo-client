@@ -26,7 +26,14 @@ export interface IGetDemoList {
   skip?: number;
 }
 
-export interface ILogin {
-  email: string;
-  password: string;
+export interface IProfile {
+  data: {
+    id: number;
+    properties: {
+      nickname: string;
+      profile_image_url: string;
+      thumbnail_image_url: string;
+    };
+    message: string;
+  };
 }
