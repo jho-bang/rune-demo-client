@@ -1,0 +1,15 @@
+.workspace {
+  width: 100%;
+  min-height: 100vh;
+  // display: flex;
+  background-size: 20px 20px;
+  background-repeat: repeat;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    #8e8e8e8e 1px,
+    transparent 0
+  );
+  background-color: #1d1a1a;
+  justify-content: space-between;
+  padding: 10px;
+}

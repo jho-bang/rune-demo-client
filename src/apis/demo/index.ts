@@ -1,5 +1,6 @@
 import type {
   ICreateImage,
+  IDemoItem,
   IDemoList,
   IGetDemoList,
   IUploadImage,
@@ -8,12 +9,22 @@ import type {
 import { BASE_URL } from "../../shared";
 
 export const apis = {
-  async getList(query: IGetDemoList = {}): Promise<IDemoList[]> {
+  async getList(query: IGetDemoList = {}): Promise<IDemoList> {
     const queryStr = Object.entries(query)
       .map(([key, value]) => `${key}=${value}`)
       .join("&");
 
     const res = await fetch(`${BASE_URL}/api/v1/demo?${queryStr}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return await res.json();
+  },
+
+  async getById(id: number): Promise<IDemoItem> {
+    const res = await fetch(`${BASE_URL}/api/v1/demo/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

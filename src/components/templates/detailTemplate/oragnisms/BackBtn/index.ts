@@ -4,7 +4,7 @@ import { html, View } from "rune-ts";
 import style from "./style.module.scss";
 
 // shared
-import { ArrowLeftIcon, ButtonIcon } from "../../../../../shared";
+import { ArrowButtonView } from "../../../../../shared";
 
 interface Props {}
 
@@ -12,11 +12,10 @@ export class BackBtnView extends View<Props> {
   override template() {
     return html`
       <div class="${style.back_btn}">
-        ${new ButtonIcon({
-          type: "primary",
-          icon: ArrowLeftIcon,
+        ${new ArrowButtonView({
+          direction: "left",
           onClick: () => {
-            window.location.reload();
+            window.location.href = "/";
           },
         })}
       </div>

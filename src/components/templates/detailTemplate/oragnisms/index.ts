@@ -1,3 +1,4 @@
 export * from "./EditorFloatList";
 export * from "./BackBtn";
-export * from "./Canvas";
+export * from "./BrushCanvas";
+export * from "./ImageCanvas";

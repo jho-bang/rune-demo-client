@@ -1,4 +1,3 @@
-.brush_canvas,
 .image_canvas {
   position: absolute;
   left: 50%;
@@ -7,8 +6,4 @@
 
   clip-path: inset(0 1% 0 0);
   transition: clip-path 100ms;
-}
-
-.brush_canvas {
-  opacity: 0.6;
 }

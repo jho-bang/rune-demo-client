@@ -11,6 +11,10 @@ export interface IUploadImage {
 }
 
 export interface IDemoList {
+  data: IDemoItem[];
+}
+
+export interface IDemoItem {
   id: number;
   origin_src: string;
   created: Date;

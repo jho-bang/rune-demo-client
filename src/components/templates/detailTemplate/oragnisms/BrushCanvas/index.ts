@@ -3,17 +3,17 @@ import { html, on, View } from "rune-ts";
 // style
 import style from "./style.module.scss";
 
-import { getCanvasContext } from "../../share";
+import { getCanvasContext } from "../../lib";
 
 interface Props {}
 
-export class EditorCanvas extends View<Props> {
+export class BrushCanvasView extends View<Props> {
   isDrag: boolean = false;
 
-  @on("mousedown", "#brush_canvas")
+  @on("mousedown")
   private _mouseDown(ev: MouseEvent) {
     this.isDrag = true;
-    const ctx = getCanvasContext("#brush_canvas");
+    const ctx = getCanvasContext(`.${BrushCanvasView}`);
 
     if (ctx) {
       ctx.beginPath();
@@ -21,15 +21,15 @@ export class EditorCanvas extends View<Props> {
     }
   }
 
-  @on("mouseup", "#brush_canvas")
+  @on("mouseup")
   private _mouseUp() {
     this.isDrag = false;
   }
 
-  @on("mousemove", "#brush_canvas")
+  @on("mousemove")
   private _mouseMove(ev: MouseEvent) {
     if (this.isDrag) {
-      const ctx = getCanvasContext("#brush_canvas");
+      const ctx = getCanvasContext(`.${this}`);
       if (ctx) {
         if (ev.buttons === 1) {
           ctx.lineTo(ev.offsetX, ev.offsetY);
@@ -45,11 +45,6 @@ export class EditorCanvas extends View<Props> {
   }
 
   override template() {
-    return html`
-      <div>
-        <canvas id="image_canvas" class=${style.image_canvas}></canvas>
-        <canvas id="brush_canvas" class="${style.brush_canvas}"></canvas>
-      </div>
-    `;
+    return html` <canvas class="${style.brush_canvas}"></canvas> `;
   }
 }
