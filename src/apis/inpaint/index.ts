@@ -34,3 +34,14 @@ export async function inpaint({ width, height, image, mask }) {
 
   return await res.blob();
 }
+
+export async function removeBG(image_src: string) {
+  const res = await fetch(`http://localhost:7001/api/remove?url=${image_src}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return await res.blob();
+}

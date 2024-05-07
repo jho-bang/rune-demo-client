@@ -14,8 +14,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@engie-group/fluid-design-system": "^5.10.2",
     "@fxts/core": "^0.28.1",
+    "@imgly/background-removal": "^1.4.5",
     "@rune-ts/server": "^0.9.22",
     "@types/node": "^20.12.7",
     "dotenv": "^16.4.5",

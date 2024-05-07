@@ -28,7 +28,7 @@ interface Props {
 
 export class TikkleDetailPage extends Page<Props> {
   loadingView = new LoadingView({ text: "로딩중...", isShow: false });
-  editorFloatListView = new EditorFloatListView({});
+  editorFloatListView = new EditorFloatListView({ item: this.data.item });
 
   @on(IsLoading)
   private _isLoading(ev: IsLoading) {

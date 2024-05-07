@@ -2,9 +2,11 @@ import { html, View } from "rune-ts";
 
 // shared
 import {
-  EditorImageIcon,
+  BASE_URL,
   IsLoading,
+  LaunchIcon,
   loadImage,
+  SmileOutlineIcon,
   WikiEditIcon,
 } from "../../../shared";
 
@@ -16,7 +18,7 @@ import { ImageCanvasView } from "../ImageCanvas";
 import { ButtonIcon, FloatListView } from "../../atoms";
 
 // apis
-import { demo_apis, inpaint } from "../../../apis";
+import { demo_apis, inpaint, removeBG } from "../../../apis";
 
 import {
   canvasInit,
@@ -24,11 +26,14 @@ import {
   getCanvasBase64,
   getCanvasContext,
 } from "../../../pages/Detail/lib";
+import type { IDemoItem } from "../../../apis/demo/types";
 
 // style
 import style from "./style.module.scss";
 
-interface Props {}
+interface Props {
+  item: IDemoItem;
+}
 
 export class EditorFloatListView extends View<Props> {
   isShowOrigin: boolean = false;
@@ -54,6 +59,17 @@ export class EditorFloatListView extends View<Props> {
     }
   };
 
+  private onRemoveBGClick = async () => {
+    try {
+      this.dispatchEvent(IsLoading, { detail: true, bubbles: true });
+      await this.onRemoveBG();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.dispatchEvent(IsLoading, { detail: false, bubbles: true });
+    }
+  };
+
   private async onErase() {
     const { image, image_base64, brush, brush_base64 } = this.getCanvasesInfo();
 
@@ -72,10 +88,22 @@ export class EditorFloatListView extends View<Props> {
     await this.drawingNewImage(src);
   }
 
+  private async onRemoveBG() {
+    const blob = await removeBG(`${BASE_URL}/${this.data.item.origin_src}`);
+
+    const new_file = new File([blob], "new_file");
+    const { path } = await demo_apis.upload(new_file);
+    await demo_apis.insert({ origin_src: path });
+
+    const src = URL.createObjectURL(blob);
+    await this.drawingNewImage(src);
+  }
+
   private async drawingOrigin(isShowOrigin: boolean) {
     const { originImage, newImage } = this;
     const image = await loadImage(isShowOrigin ? newImage : originImage);
     const ctx = getCanvasContext(`.${ImageCanvasView}`);
+    ctx!.clearRect(0, 0, image.width, image.height);
     ctx!.drawImage(image, 0, 0, image.width, image.height);
     return !isShowOrigin;
   }
@@ -105,9 +133,17 @@ export class EditorFloatListView extends View<Props> {
           {
             item: new ButtonIcon({
               klass: style.ButtonIcon,
-              icon: EditorImageIcon,
+              icon: SmileOutlineIcon,
               type: "primary",
               onClick: this.onShowOriginClick,
+            }),
+          },
+          {
+            item: new ButtonIcon({
+              klass: style.ButtonIcon,
+              icon: LaunchIcon,
+              type: "primary",
+              onClick: this.onRemoveBGClick,
             }),
           },
           {
