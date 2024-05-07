@@ -1,13 +1,12 @@
 import type { StorybookConfig } from "@storybook/html-webpack5";
-import crypto from "crypto";
+import { createHash } from "node:crypto";
 
 const getLocalIdent = (
   context: any,
   localIdentName: string,
   localName: string,
 ) => {
-  const hash = crypto
-    .createHash("md5")
+  const hash = createHash("md5")
     .update(context.resourcePath)
     .digest("hex")
     .substring(0, 8);

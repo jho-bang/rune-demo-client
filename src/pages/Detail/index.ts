@@ -2,20 +2,23 @@
 import { Page, html, on } from "rune-ts";
 
 // templates
-import { DetailTemplateView } from "../../components";
+import { DetailTemplateView, LoadingView } from "../../components";
 
 // shared
-import { IsLoading, LoadingView } from "../../shared";
+import { IsLoading } from "../../shared";
 
 // apis
-import type { IDemoItem } from "../../apis/demo/types";
+import type { IDemoItem, IProfile } from "../../apis/demo/types";
 
 // style
 import style from "./style.module.scss";
 
-export class TikkleDetailPage extends Page<{
+interface Props {
   item: IDemoItem;
-}> {
+  profile: IProfile;
+}
+
+export class TikkleDetailPage extends Page<Props> {
   loadingView = new LoadingView({ text: "로딩중...", isShow: false });
 
   @on(IsLoading)

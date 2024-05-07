@@ -6,7 +6,7 @@ import {
   EditorFloatListView,
   BackBtnView,
   ImageCanvasView,
-} from "./oragnisms";
+} from "../../oragnisms";
 
 // shared
 import { convertURLtoFile } from "../../../shared";

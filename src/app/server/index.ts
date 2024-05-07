@@ -8,22 +8,6 @@ dotenv.config();
 
 const server = app();
 
-server.get(ClientRouter["/tictactoe"].toString(), (req, res) => {
-  const layoutData: LayoutData = {
-    head: {
-      title: "튜토리얼-틱택토",
-      description: "",
-    },
-  };
-
-  const html = new MetaView(
-    ClientRouter["/tictactoe"]({}),
-    layoutData,
-  ).toHtml();
-
-  return res.send(html);
-});
-
 server.get(ClientRouter[""].toString(), async (req: any, res) => {
   const layoutData: LayoutData = {
     head: {
@@ -33,27 +17,62 @@ server.get(ClientRouter[""].toString(), async (req: any, res) => {
   };
   res.locals.layoutData = layoutData;
 
-  const cookies = req.headers.cookie;
+  const cookies = req.headers.cookie || "";
   const getCookie = cookies
     .split("; ")
     .filter((cookie: string) => cookie.includes("access_token"));
 
-  if (getCookie.length) {
-    const access_token = getCookie[0].split("=")[1];
-    const { data } = await apis.getList();
-    const profile = await apis.kakao_profile(access_token);
-    const html = new MetaView(
-      ClientRouter[""]({
-        images: data,
-        profile,
-      }),
-      res.locals.layoutData,
-    ).toHtml();
-
-    return res.send(html);
+  if (!getCookie || !getCookie.length) {
+    return res.redirect("/login");
   }
 
-  return res.send("error");
+  const access_token = getCookie[0].split("=")[1];
+  const profile = await apis.kakao_profile(access_token);
+  const { data } = await apis.getList({ sns_id: profile.data.id });
+  const html = new MetaView(
+    ClientRouter[""]({
+      images: data,
+      profile,
+    }),
+    res.locals.layoutData,
+  ).toHtml();
+
+  return res.send(html);
+});
+
+server.get(ClientRouter["/detail"].toString(), async (req: any, res) => {
+  const layoutData: LayoutData = {
+    head: {
+      title: "튜토리얼-티끌 제거기",
+      description: "",
+    },
+  };
+  res.locals.layoutData = layoutData;
+
+  const cookies = req.headers.cookie || "";
+  const getCookie = cookies
+    .split("; ")
+    .filter((cookie: string) => cookie.includes("access_token"));
+
+  if (!getCookie || !getCookie.length) {
+    return res.redirect("/login");
+  }
+
+  const access_token = getCookie[0].split("=")[1];
+  const profile = await apis.kakao_profile(access_token);
+
+  const id = Number(req.query.id);
+  const item = await apis.getById(id);
+
+  const html = new MetaView(
+    ClientRouter["/detail"]({
+      item,
+      profile,
+    }),
+    res.locals.layoutData,
+  ).toHtml();
+
+  return res.send(html);
 });
 
 server.get(ClientRouter["/login"].toString(), async (req, res) => {
@@ -67,28 +86,6 @@ server.get(ClientRouter["/login"].toString(), async (req, res) => {
 
   const html = new MetaView(
     ClientRouter["/login"]({}),
-    res.locals.layoutData,
-  ).toHtml();
-
-  return res.send(html);
-});
-
-server.get(ClientRouter["/detail"].toString(), async (req, res) => {
-  const layoutData: LayoutData = {
-    head: {
-      title: "튜토리얼-티끌 제거기",
-      description: "",
-    },
-  };
-  res.locals.layoutData = layoutData;
-
-  const id = Number(req.query.id);
-  const item = await apis.getById(id);
-
-  const html = new MetaView(
-    ClientRouter["/detail"]({
-      item,
-    }),
     res.locals.layoutData,
   ).toHtml();
 
@@ -122,7 +119,6 @@ server.get("/kakao/callback", async (req, res) => {
 
   res.cookie("access_token", token.access_token, {
     maxAge: token.expires_in * 1000,
-    httpOnly: true,
   });
 
   res.redirect("/");

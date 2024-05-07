@@ -14,17 +14,6 @@ export function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
-export function blobToBase64(data: Blob): Promise<string | ArrayBuffer> {
-  const reader = new FileReader();
-  reader.readAsDataURL(data);
-  return new Promise((resolve) => {
-    reader.onloadend = () => {
-      const base64 = reader.result || "";
-      resolve(base64);
-    };
-  });
-}
-
 export async function convertURLtoFile(url: string) {
   const response = await fetch(url);
   const data = await response.blob();

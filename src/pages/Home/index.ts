@@ -4,24 +4,32 @@ import { Page, html } from "rune-ts";
 // style
 import style from "./style.module.scss";
 
-// template
-import { HomeTemplate } from "../../components";
+// components
+import { HomeTemplate, HeaderView } from "../../components";
 
 // apis
 import type { IDemoItem, IProfile } from "../../apis/demo/types";
 
-export class TikklePage extends Page<{
+interface Props {
   images: IDemoItem[];
   profile: IProfile;
-}> {
-  override async onRender() {
-    console.log(this.data.profile);
-  }
+}
 
+export class TikklePage extends Page<Props> {
   override template() {
     return html`
-      <div id="workspace" class="${style.workspace}">
-        ${new HomeTemplate({ images: this.data.images })}
+      <div>
+        <div>
+          ${new HeaderView({
+            profile: this.data.profile,
+          })}
+        </div>
+        <div id="workspace" class="${style.workspace}">
+          ${new HomeTemplate({
+            images: this.data.images,
+            profile: this.data.profile,
+          })}
+        </div>
       </div>
     `;
   }

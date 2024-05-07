@@ -60,6 +60,7 @@ export const apis = {
     const res = await fetch(`${BASE_URL}/api/v1/demo`, {
       method: "POST",
       headers: {
+        access_token: getCookie("access_token") || "",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),

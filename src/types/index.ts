@@ -1,2 +1,7 @@
-export * from "./tictactoe";
-export * from "./tikkle";
+export interface ITikkleStore {
+  isLoading: boolean;
+  originImage: string;
+  newImage: string;
+}
+
+export interface ITikkleSetStore extends Partial<ITikkleStore> {}

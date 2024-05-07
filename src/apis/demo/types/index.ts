@@ -22,6 +22,7 @@ export interface IDemoItem {
 }
 
 export interface IGetDemoList {
+  sns_id?: number;
   limit?: number;
   skip?: number;
 }
@@ -31,8 +32,8 @@ export interface IProfile {
     id: number;
     properties: {
       nickname: string;
-      profile_image_url: string;
-      thumbnail_image_url: string;
+      profile_image: string;
+      thumbnail_image: string;
     };
     message: string;
   };
