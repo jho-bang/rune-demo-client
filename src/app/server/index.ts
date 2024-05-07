@@ -28,6 +28,7 @@ server.get(ClientRouter[""].toString(), async (req: any, res) => {
 
   const access_token = getCookie[0].split("=")[1];
   const profile = await user_apis.profile(access_token);
+
   const { data } = await demo_apis.getList({
     user_id: profile.data.id,
     limit: 20,
@@ -104,6 +105,30 @@ server.get(ClientRouter["/login"].toString(), async (req, res) => {
 server.get("/kakao", (req, res) => {
   const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile_image,profile_nickname`;
   res.redirect(kakaoAuthURL);
+});
+
+server.get("/kakao/logout", async (req, res) => {
+  const cookies = req.headers.cookie || "";
+  const getCookie = cookies
+    .split("; ")
+    .filter((cookie: string) => cookie.includes("access_token"));
+
+  if (!getCookie || !getCookie.length) {
+    return res.redirect("/login");
+  }
+
+  const access_token = getCookie[0].split("=")[1];
+
+  await fetch("https://kapi.kakao.com/v1/user/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${access_token}`,
+    },
+  });
+
+  res.cookie("access_token", "", { maxAge: -1 });
+  res.send("OK");
 });
 
 server.get("/kakao/callback", async (req, res) => {

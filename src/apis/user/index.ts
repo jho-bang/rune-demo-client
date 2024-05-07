@@ -14,4 +14,15 @@ export const user_apis = {
 
     return await res.json();
   },
+  async logout(access_token: string) {
+    const res = await fetch(`/kakao/logout`, {
+      method: "GET",
+      headers: {
+        access_token: access_token,
+        "Content-Type": "application/json",
+      },
+    });
+
+    return await res.text();
+  },
 };

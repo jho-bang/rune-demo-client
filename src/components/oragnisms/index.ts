@@ -1,4 +1,4 @@
-export * from "./headers";
+export * from "./Headers";
 export * from "./ImageCanvas";
 export * from "./BrushCanvas";
 export * from "./EditorFloatList";

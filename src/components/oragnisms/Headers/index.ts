@@ -8,10 +8,11 @@ import { BackBtnView } from "../BackBtn";
 import type { IProfile } from "../../../apis/user/types";
 
 // shared
-import { deleteCookie, getCookie } from "../../../shared";
+import { getCookie } from "../../../shared";
 
 // style
 import style from "./style.module.scss";
+import { user_apis } from "../../../apis";
 
 interface Props {
   profile: IProfile;
@@ -20,13 +21,13 @@ interface Props {
 
 export class HeaderView extends View<Props> {
   @on("click", `.${style.avatarView}`)
-  private _onClickAvatar() {
+  private async _onClickAvatar() {
     const access_token = getCookie("access_token");
     if (access_token) {
-      deleteCookie("access_token");
+      await user_apis.logout(access_token);
     }
 
-    window.location.href = "/login";
+    window.location.reload();
   }
 
   override template() {
