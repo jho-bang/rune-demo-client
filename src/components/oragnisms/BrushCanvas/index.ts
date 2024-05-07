@@ -3,7 +3,7 @@ import { html, on, View } from "rune-ts";
 // style
 import style from "./style.module.scss";
 
-import { getCanvasContext } from "../../templates/detailTemplate/lib";
+import { getCanvasContext } from "../../../pages/Detail/lib";
 
 interface Props {}
 

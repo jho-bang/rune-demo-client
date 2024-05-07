@@ -12,16 +12,18 @@ import {
 import { BrushCanvasView } from "../BrushCanvas";
 import { ImageCanvasView } from "../ImageCanvas";
 
+// atoms
 import { ButtonIcon, FloatListView } from "../../atoms";
+
+// apis
+import { demo_apis, inpaint } from "../../../apis";
 
 import {
   canvasInit,
   clearBrush,
   getCanvasBase64,
   getCanvasContext,
-} from "../../templates/detailTemplate/lib";
-
-import { apis, inpaint } from "../../../apis";
+} from "../../../pages/Detail/lib";
 
 // style
 import style from "./style.module.scss";
@@ -63,8 +65,8 @@ export class EditorFloatListView extends View<Props> {
     });
 
     const new_file = new File([blob], "new_file");
-    const { path } = await apis.upload(new_file);
-    await apis.insert({ origin_src: path });
+    const { path } = await demo_apis.upload(new_file);
+    await demo_apis.insert({ origin_src: path });
 
     const src = URL.createObjectURL(blob);
     await this.drawingNewImage(src);

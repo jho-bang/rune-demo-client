@@ -1,6 +1,6 @@
 import { type LayoutData, MetaView, app } from "@rune-ts/server";
 import { ClientRouter } from "../routes";
-import { apis } from "../../apis";
+import { demo_apis, user_apis } from "../../apis";
 import { qs } from "../../shared";
 import dotenv from "dotenv";
 
@@ -27,11 +27,20 @@ server.get(ClientRouter[""].toString(), async (req: any, res) => {
   }
 
   const access_token = getCookie[0].split("=")[1];
-  const profile = await apis.kakao_profile(access_token);
-  const { data } = await apis.getList({ sns_id: profile.data.id });
+  const profile = await user_apis.profile(access_token);
+  const { data } = await demo_apis.getList({
+    user_id: profile.data.id,
+    limit: 20,
+    skip: 0,
+  });
+
   const html = new MetaView(
     ClientRouter[""]({
-      images: data,
+      images: data.map((item) => ({
+        ...item,
+        is_like: Boolean(Number(item.is_like)),
+        liked_cnt: Number(item.liked_cnt || 0),
+      })),
       profile,
     }),
     res.locals.layoutData,
@@ -59,10 +68,10 @@ server.get(ClientRouter["/detail"].toString(), async (req: any, res) => {
   }
 
   const access_token = getCookie[0].split("=")[1];
-  const profile = await apis.kakao_profile(access_token);
+  const profile = await user_apis.profile(access_token);
 
   const id = Number(req.query.id);
-  const item = await apis.getById(id);
+  const item = await demo_apis.getById(id);
 
   const html = new MetaView(
     ClientRouter["/detail"]({

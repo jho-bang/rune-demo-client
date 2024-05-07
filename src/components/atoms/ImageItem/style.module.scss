@@ -8,12 +8,23 @@
     opacity 0.2s ease-in-out;
   opacity: 0.6;
   cursor: pointer;
+  position: relative;
 
   &:hover {
     opacity: 1;
   }
+}
 
-  & img {
-    width: 100%;
-  }
+.heart {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 1.5rem;
+  height: 1.5rem;
+
+  color: $mp-color-text-description;
+}
+
+.image {
+  width: 100%;
 }

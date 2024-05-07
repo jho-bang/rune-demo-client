@@ -8,7 +8,7 @@ import style from "./style.module.scss";
 import { EditorAddIcon, SIZE_10MB } from "../../../shared";
 
 // apis
-import { apis } from "../../../apis";
+import { demo_apis } from "../../../apis";
 
 interface Props {
   text: string;
@@ -19,8 +19,9 @@ interface Props {
 export class ImageSelectView extends View<Props> {
   uploadElemId = `file-upload-${Math.random().toString()}`;
 
-  @on("change", `input`)
+  @on("change", `.${style.hidden}`)
   private async _onChange(ev) {
+    console.log(ev);
     const file = ev.currentTarget.files?.[0];
 
     if (file) {
@@ -33,8 +34,8 @@ export class ImageSelectView extends View<Props> {
   }
 
   private async onUpload(file: File) {
-    const { path } = await apis.upload(file);
-    const { data } = await apis.insert({ origin_src: path });
+    const { path } = await demo_apis.upload(file);
+    const { data } = await demo_apis.insert({ origin_src: path });
     return data[0].id;
   }
 

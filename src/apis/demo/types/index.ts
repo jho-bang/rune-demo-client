@@ -19,22 +19,12 @@ export interface IDemoItem {
   origin_src: string;
   created: Date;
   updated?: Date;
+  liked_cnt: number;
+  is_like: boolean;
 }
 
 export interface IGetDemoList {
-  sns_id?: number;
+  user_id?: number;
   limit?: number;
   skip?: number;
-}
-
-export interface IProfile {
-  data: {
-    id: number;
-    properties: {
-      nickname: string;
-      profile_image: string;
-      thumbnail_image: string;
-    };
-    message: string;
-  };
 }

@@ -67,7 +67,7 @@ export class AutoComplete<T> extends View<IAutoCompleteProps<T>> {
     if (autoCompleteInput) {
       autoCompleteInput.addEventListener("keyup", (e) => this.onInput(e));
       autoCompleteInput.addEventListener("focusout", () =>
-        setTimeout(this.closeAllList, 100),
+        setTimeout(this.closeAllList, 200),
       );
     }
   }

@@ -1,17 +1,25 @@
 // base
 import { Page, html, on } from "rune-ts";
 
-// templates
-import { DetailTemplateView, LoadingView } from "../../components";
+// components
+import {
+  BrushCanvasView,
+  EditorFloatListView,
+  HeaderView,
+  ImageCanvasView,
+  LoadingView,
+} from "../../components";
 
 // shared
-import { IsLoading } from "../../shared";
+import { BASE_URL, convertURLtoFile, IsLoading } from "../../shared";
 
 // apis
-import type { IDemoItem, IProfile } from "../../apis/demo/types";
+import type { IDemoItem } from "../../apis/demo/types";
+import type { IProfile } from "../../apis/user/types";
 
 // style
 import style from "./style.module.scss";
+import { canvasInit } from "./lib";
 
 interface Props {
   item: IDemoItem;
@@ -20,6 +28,7 @@ interface Props {
 
 export class TikkleDetailPage extends Page<Props> {
   loadingView = new LoadingView({ text: "로딩중...", isShow: false });
+  editorFloatListView = new EditorFloatListView({});
 
   @on(IsLoading)
   private _isLoading(ev: IsLoading) {
@@ -27,11 +36,36 @@ export class TikkleDetailPage extends Page<Props> {
     this.loadingView.redraw();
   }
 
+  override async onMount() {
+    if (this.data.item) {
+      const image = new Image();
+
+      const file = await convertURLtoFile(
+        `${BASE_URL}/${this.data.item.origin_src}`,
+      );
+
+      image.src = URL.createObjectURL(file);
+      this.editorFloatListView.originImage = image.src;
+      image.onload = () => {
+        canvasInit(`.${ImageCanvasView}`, image, image);
+        canvasInit(`.${BrushCanvasView}`, image);
+      };
+    }
+  }
+
   override template() {
     return html`
-      <div id="workspace" class="${style.workspace}">
+      <div>
         <div>${this.loadingView}</div>
-        <div>${new DetailTemplateView({ item: this.data.item })}</div>
+        <div>
+          <div>
+            ${new HeaderView({ profile: this.data.profile, is_back: true })}
+          </div>
+        </div>
+        <div id="workspace" class="${style.workspace}">
+          <div>${new BrushCanvasView({})} ${new ImageCanvasView({})}</div>
+          <div>${this.editorFloatListView}</div>
+        </div>
       </div>
     `;
   }
