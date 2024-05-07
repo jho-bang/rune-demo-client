@@ -27,6 +27,8 @@ export function canvasInit(
     image.naturalHeight,
   );
 
+  console.log(resizeWidth, resizeHeight);
+
   if (ctx) {
     ctx.canvas.width = resizeWidth;
     ctx.canvas.height = resizeHeight;
@@ -50,7 +52,7 @@ export function resizeImage(width: number, height: number) {
   if (width >= 1000 || height >= 1000) {
     const resizeWidth = width * IMG_RESIZE_RATE;
     const resizeHeight = height * IMG_RESIZE_RATE;
-    return { resizeWidth, resizeHeight };
+    return resizeImage(resizeWidth, resizeHeight);
   }
 
   return { resizeWidth: width, resizeHeight: height };

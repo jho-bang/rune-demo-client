@@ -1,9 +1,19 @@
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: $mp-avatar-container-size;
+  height: $mp-avatar-container-size;
   border-radius: 50%;
   overflow: hidden;
 
   color: #eee;
   border: 1px solid #eee;
+
+  &.large {
+    width: $mp-avatar-container-size-lg;
+    height: $mp-avatar-container-size-lg;
+  }
+
+  &.small {
+    width: $mp-avatar-container-size-sm;
+    height: $mp-avatar-container-size-sm;
+  }
 }

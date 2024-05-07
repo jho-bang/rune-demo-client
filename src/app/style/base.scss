@@ -3,6 +3,8 @@
 @import "sub/function";
 @import "sub/mixin";
 @import "sub/variables";
+@import "./typography";
+@import "reset";
 
 $mp-button-font-weight: 400;
 $mp-button-default-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
@@ -433,3 +435,13 @@ $mp-select-multiple-selector-bg-disabled: rgba(0, 0, 0, 0.04);
 $mp-select-multiple-item-color-disabled: rgba(0, 0, 0, 0.25);
 $mp-select-multiple-item-border-color-disabled: transparent;
 $mp-select-show-arrow-padding-inline-end: 18px;
+
+$mp-avatar-container-size: 32px;
+$mp-avatar-container-size-lg: 40px;
+$mp-avatar-container-size-sm: 24px;
+$mp-avatar-text-font-size: 18px;
+$mp-avatar-text-font-size-lg: 24px;
+$mp-avatar-text-font-size-sm: 14px;
+$mp-avatar-group-space: 4px;
+$mp-avatar-group-overlapping: -8px;
+$mp-avatar-group-border-color: #ffffff;
