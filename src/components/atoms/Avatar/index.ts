@@ -1,7 +1,10 @@
-import { html, View } from "rune-ts";
+import { html, on, View } from "rune-ts";
 
+// style
 import style from "./style.module.scss";
-import { UserFillIcon } from "../../../shared";
+
+import { getCookie, UserFillIcon } from "../../../shared";
+import { user_apis } from "../../../apis";
 
 export interface IAvatarProps {
   thumbnail_url: string;
@@ -10,6 +13,16 @@ export interface IAvatarProps {
 }
 
 export class AvatarView extends View<IAvatarProps> {
+  @on("click")
+  private async _onClickAvatar() {
+    const access_token = getCookie("access_token");
+    if (access_token) {
+      await user_apis.logout(access_token);
+    }
+
+    window.location.reload();
+  }
+
   override template({
     size = "default",
     classes,

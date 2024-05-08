@@ -20,10 +20,9 @@ export class ImageSelectView extends View<Props> {
   uploadElemId = `file-upload-${Math.random().toString()}`;
 
   @on("change", `.${style.hidden}`)
-  private async _onChange(ev) {
-    console.log(ev);
-    const file = ev.currentTarget.files?.[0];
-
+  private async _onChange(ev: Event) {
+    const currentTarget = ev.currentTarget as HTMLInputElement;
+    const file = currentTarget.files?.[0];
     if (file) {
       const onChanged = this.onFileChange(file);
       if (onChanged) {

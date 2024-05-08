@@ -27,8 +27,6 @@ export function canvasInit(
     image.naturalHeight,
   );
 
-  console.log(resizeWidth, resizeHeight);
-
   if (ctx) {
     ctx.canvas.width = resizeWidth;
     ctx.canvas.height = resizeHeight;

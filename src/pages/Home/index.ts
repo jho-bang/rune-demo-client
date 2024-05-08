@@ -25,12 +25,10 @@ export class TikklePage extends Page<Props> {
   override template() {
     return html`
       <div>
-        <div>
-          ${new HeaderView({
-            profile: this.data.profile,
-          })}
+        <div class="header">
+          ${new HeaderView({ profile: this.data.profile })}
         </div>
-        <div id="workspace" class="${style.workspace}">
+        <div class="${style.workspace}">
           <div>${new ImageListView(this.data.images || [])}</div>
           <div>
             ${new FloatListView([

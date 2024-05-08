@@ -47,7 +47,7 @@ export class ImageItemView extends View<IImageItemProps> {
         </div>
         <img
           src="${BASE_URL}/${this.data.origin_src}"
-          alt=""
+          alt="상품 썸네일"
           class="${style.image}"
         />
       </div>

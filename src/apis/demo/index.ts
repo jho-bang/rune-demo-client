@@ -32,6 +32,7 @@ export const demo_apis = {
 
   async upload(formData: File): Promise<IUploadImage> {
     const form = new FormData();
+
     form.append("my_file", formData);
     const res = await fetch(`${BASE_URL}/api/v1/demo/upload`, {
       method: "POST",

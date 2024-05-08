@@ -84,3 +84,16 @@ export function deleteCookie(name: string) {
     "max-age": -1,
   });
 }
+
+export function getServerCookie(req, name: string): string | null {
+  const cookies = req.headers.cookie || "";
+  return cookies
+    .split("; ")
+    .filter((cookie: string) => cookie.includes(name))[0];
+}
+
+export function wrapAsyncMiddleware(fn) {
+  return (req, res, next) => {
+    fn(req, res, next).catch(next);
+  };
+}

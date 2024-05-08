@@ -25,6 +25,7 @@ import {
   clearBrush,
   getCanvasBase64,
   getCanvasContext,
+  resizeImage,
 } from "../../../pages/Detail/lib";
 import type { IDemoItem } from "../../../apis/demo/types";
 
@@ -80,9 +81,10 @@ export class EditorFloatListView extends View<Props> {
       mask: brush_base64,
     });
 
-    const new_file = new File([blob], "new_file");
-    const { path } = await demo_apis.upload(new_file);
-    await demo_apis.insert({ origin_src: path });
+    const new_file = new File([blob], "new_file", { type: blob.type });
+    const res = await demo_apis.upload(new_file);
+
+    await demo_apis.insert({ origin_src: res.path });
 
     const src = URL.createObjectURL(blob);
     await this.drawingNewImage(src);
@@ -91,7 +93,7 @@ export class EditorFloatListView extends View<Props> {
   private async onRemoveBG() {
     const blob = await removeBG(`${BASE_URL}/${this.data.item.origin_src}`);
 
-    const new_file = new File([blob], "new_file");
+    const new_file = new File([blob], "new_file", { type: blob.type });
     const { path } = await demo_apis.upload(new_file);
     await demo_apis.insert({ origin_src: path });
 
@@ -103,8 +105,12 @@ export class EditorFloatListView extends View<Props> {
     const { originImage, newImage } = this;
     const image = await loadImage(isShowOrigin ? newImage : originImage);
     const ctx = getCanvasContext(`.${ImageCanvasView}`);
-    ctx!.clearRect(0, 0, image.width, image.height);
-    ctx!.drawImage(image, 0, 0, image.width, image.height);
+    const { resizeWidth, resizeHeight } = resizeImage(
+      image.width,
+      image.height,
+    );
+    ctx!.clearRect(0, 0, resizeWidth, resizeHeight);
+    ctx!.drawImage(image, 0, 0, resizeWidth, resizeHeight);
     return !isShowOrigin;
   }
 

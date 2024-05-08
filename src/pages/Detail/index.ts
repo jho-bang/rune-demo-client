@@ -19,6 +19,7 @@ import type { IProfile } from "../../apis/user/types";
 
 // style
 import style from "./style.module.scss";
+
 import { canvasInit } from "./lib";
 
 interface Props {
