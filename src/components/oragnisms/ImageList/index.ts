@@ -1,7 +1,6 @@
 import { ListView } from "rune-ts";
 
-// atoms
-import { type IImageItemProps, ImageItemView } from "../../atoms";
+import { type IImageItemProps, ImageItemView } from "../ImageItem";
 
 // style
 import style from "./style.module.scss";

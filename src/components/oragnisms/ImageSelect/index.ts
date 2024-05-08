@@ -7,6 +7,9 @@ import style from "./style.module.scss";
 // shared
 import { EditorAddIcon, SIZE_10MB } from "../../../shared";
 
+// atoms
+import { ButtonIcon } from "../../atoms";
+
 // apis
 import { demo_apis } from "../../../apis";
 
@@ -16,7 +19,7 @@ interface Props {
   file?: File;
 }
 
-export class ImageSelectView extends View<Props> {
+export class ImageSelectButton extends View<Props> {
   uploadElemId = `file-upload-${Math.random().toString()}`;
 
   @on("change", `.${style.hidden}`)
@@ -31,6 +34,14 @@ export class ImageSelectView extends View<Props> {
       }
     }
   }
+
+  private onClick = () => {
+    const elem = this.element().querySelector(
+      `.${style.fileSelectLabel}`,
+    ) as HTMLInputElement;
+
+    elem.click();
+  };
 
   private async onUpload(file: File) {
     const { path } = await demo_apis.upload(file);
@@ -64,7 +75,14 @@ export class ImageSelectView extends View<Props> {
             accept=${this.data.accept}
           />
 
-          <div class="${style.icon}">${EditorAddIcon}</div>
+          <div>
+            ${new ButtonIcon({
+              klass: style.ButtonIcon,
+              icon: EditorAddIcon,
+              type: "primary",
+              onClick: this.onClick,
+            })}
+          </div>
         </div>
       </label>
     </div> `;

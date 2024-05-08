@@ -3,9 +3,13 @@ import { html, on, View } from "rune-ts";
 // style
 import style from "./style.module.scss";
 
-import { getCanvasContext } from "../../../pages/Detail/lib";
+import { resizeImage } from "../Editor/lib";
+import type { IDemoItem } from "../../../apis/demo/types";
+import { BASE_URL, loadImage } from "../../../shared";
 
-interface Props {}
+interface Props {
+  item: IDemoItem;
+}
 
 export class BrushCanvasView extends View<Props> {
   isDrag: boolean = false;
@@ -13,7 +17,7 @@ export class BrushCanvasView extends View<Props> {
   @on("mousedown")
   private _mouseDown(ev: MouseEvent) {
     this.isDrag = true;
-    const ctx = getCanvasContext(`.${BrushCanvasView}`);
+    const { ctx } = this.getData();
 
     if (ctx) {
       ctx.beginPath();
@@ -29,7 +33,7 @@ export class BrushCanvasView extends View<Props> {
   @on("mousemove")
   private _mouseMove(ev: MouseEvent) {
     if (this.isDrag) {
-      const ctx = getCanvasContext(`.${this}`);
+      const { ctx } = this.getData();
       if (ctx) {
         if (ev.buttons === 1) {
           ctx.lineTo(ev.offsetX, ev.offsetY);
@@ -44,7 +48,47 @@ export class BrushCanvasView extends View<Props> {
     }
   }
 
+  getData() {
+    const canvas = document.querySelector(`.${this}`) as HTMLCanvasElement;
+    const base64 = canvas.toDataURL();
+    const ctx = canvas.getContext("2d");
+
+    return { canvas, base64, ctx };
+  }
+
+  clear() {
+    const { canvas, ctx } = this.getData();
+    if (ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  draw(image: HTMLImageElement) {
+    this.init(image);
+  }
+
+  init(image: HTMLImageElement) {
+    const { ctx } = this.getData();
+
+    const { resizeWidth, resizeHeight } = resizeImage(
+      image.naturalWidth,
+      image.naturalHeight,
+    );
+
+    if (ctx) {
+      ctx.canvas.width = resizeWidth;
+      ctx.canvas.height = resizeHeight;
+    }
+  }
+
+  override async onMount() {
+    if (this.data.item) {
+      const image = await loadImage(`${BASE_URL}/${this.data.item.origin_src}`);
+      this.draw(image);
+    }
+  }
+
   override template() {
-    return html` <canvas class="${style.brush_canvas}"></canvas> `;
+    return html`<canvas class="${style.brush_canvas}"></canvas>`;
   }
 }

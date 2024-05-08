@@ -7,7 +7,7 @@ import kakaoLoginBtn from "../../shared/assets/imgs/kakao_login_large_narrow.png
 
 interface Props {}
 
-export class LoginView extends Page<Props> {
+export class LoginPage extends Page<Props> {
   override onMount() {
     const access_token = getCookie("access_token");
     if (access_token) {

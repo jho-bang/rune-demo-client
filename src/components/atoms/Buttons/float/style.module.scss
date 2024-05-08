@@ -1,0 +1,20 @@
+@import "../../../../app/style/base";
+
+.float_button {
+  position: fixed;
+
+  background-color: $mp-color-primary;
+  transition: background-color $mp-motion-duration-mid;
+  box-shadow: $mp-box-shadow-secondary;
+
+  width: $mp-control-height-lg;
+  height: $mp-control-height-lg;
+
+  border-radius: 50%;
+
+  padding: $mp-padding-xxs $mp-padding-xxs;
+
+  cursor: pointer;
+
+  z-index: $mp-z-index-popup-base;
+}

@@ -3,7 +3,9 @@ import { html, on, View } from "rune-ts";
 // shared
 import { BASE_URL } from "../../../shared";
 import { like_apis } from "../../../apis";
-import { HeartView } from "../Heart";
+
+// atoms
+import { HeartView } from "../../atoms";
 
 // style
 import style from "./style.module.scss";
@@ -24,15 +26,17 @@ export class ImageItemView extends View<IImageItemProps> {
   @on("click", `.${style.heart}`)
   private async _onLike() {
     if (this.data.is_like) {
+      this.data.is_like = false;
       await like_apis.remove({ demo_id: this.data.id });
     } else {
+      this.data.is_like = true;
       await like_apis.add({ demo_id: this.data.id });
     }
-    this.redraw();
+
+    this.heartToggle();
   }
 
-  override redraw() {
-    this.data.is_like = !this.data.is_like;
+  heartToggle() {
     const heart = this.element().querySelector(`.${style.heart}`);
     heart!.innerHTML = "";
     heart!.append(new HeartView({ is_like: this.data.is_like }).render());

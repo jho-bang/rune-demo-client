@@ -1,4 +1,4 @@
-import { html, on, View } from "rune-ts";
+import { html, View } from "rune-ts";
 
 // style
 import style from "./style.module.scss";
@@ -13,14 +13,14 @@ export interface IAvatarProps {
 }
 
 export class AvatarView extends View<IAvatarProps> {
-  @on("click")
-  private async _onClickAvatar() {
-    const access_token = getCookie("access_token");
-    if (access_token) {
-      await user_apis.logout(access_token);
-    }
-
-    window.location.reload();
+  override onMount() {
+    this.element().addEventListener("click", async () => {
+      const access_token = getCookie("access_token");
+      if (access_token) {
+        await user_apis.logout(access_token);
+      }
+      window.location.reload();
+    });
   }
 
   override template({

@@ -1,0 +1,43 @@
+@import "../../../../app/style/base";
+
+.text {
+  color: $mp-color-text;
+  word-break: break-word;
+  line-height: $mp-line-height;
+
+  font-size: $mp-font-size;
+  box-sizing: border-box;
+}
+
+.secondary {
+  color: $mp-color-text-description;
+}
+
+.success {
+  color: $mp-color-success;
+}
+
+.warning {
+  color: $mp-color-warning;
+}
+
+.danger {
+  color: $mp-color-error;
+}
+
+.strong {
+  font-weight: $mp-font-weight-strong;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.underline {
+  text-decoration: underline;
+  text-decoration-skip-ink: auto;
+}
+
+.delete {
+  text-decoration: line-through;
+}

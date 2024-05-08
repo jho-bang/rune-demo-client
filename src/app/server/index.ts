@@ -26,13 +26,10 @@ server.get(
     }
 
     const access_token = cookie.split("=")[1];
-
     const profile = await user_apis.profile(access_token);
 
     const { data } = await demo_apis.getList({
       user_id: profile.data.id,
-      limit: 20,
-      skip: 0,
     });
 
     const html = new MetaView(

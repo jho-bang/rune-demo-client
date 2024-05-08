@@ -8,8 +8,8 @@ import style from "./style.module.scss";
 import {
   HeaderView,
   ImageListView,
-  FloatListView,
-  ImageSelectView,
+  FloatButtonView,
+  ImageSelectButton,
 } from "../../components";
 
 // apis
@@ -21,26 +21,21 @@ interface Props {
   profile: IProfile;
 }
 
-export class TikklePage extends Page<Props> {
+export class HomePage extends Page<Props> {
   override template() {
     return html`
       <div>
-        <div class="header">
-          ${new HeaderView({ profile: this.data.profile })}
-        </div>
+        ${new HeaderView({ profile: this.data.profile })}
         <div class="${style.workspace}">
-          <div>${new ImageListView(this.data.images || [])}</div>
-          <div>
-            ${new FloatListView([
-              {
-                item: new ImageSelectView({
-                  text: "이미지를 업로드해주세용.",
-                  accept: "image/*",
-                }),
-              },
-            ])}
-          </div>
+          ${new ImageListView(this.data.images || [])}
         </div>
+        ${new FloatButtonView({
+          children: new ImageSelectButton({
+            text: "이미지를 업로드해주세용.",
+            accept: "image/*",
+          }), 
+          bottom: 50, right: 20
+        })}
       </div>
     `;
   }

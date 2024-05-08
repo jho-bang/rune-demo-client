@@ -1,11 +1,13 @@
+@import "../../../app/style/base";
+
 .avatar {
   width: $mp-avatar-container-size;
   height: $mp-avatar-container-size;
   border-radius: 50%;
   overflow: hidden;
 
-  color: #eee;
-  border: 1px solid #eee;
+  color: $mp-avatar-group-border-color;
+  border: 1px solid $mp-avatar-group-border-color;
 
   &.large {
     width: $mp-avatar-container-size-lg;

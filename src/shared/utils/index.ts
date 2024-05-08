@@ -11,6 +11,7 @@ export function loadImage(src: string): Promise<HTMLImageElement> {
       reject(err);
     };
     img.src = src;
+    img.crossOrigin = "Anonymous";
   });
 }
 

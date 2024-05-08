@@ -1,0 +1,30 @@
+@import "../../../app/style/base";
+
+.card {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $mp-color-text;
+  font-size: $mp-font-size;
+  line-height: $mp-line-height;
+  list-style: none;
+  font-family: $mp-font-family;
+  position: relative;
+  background: $mp-color-bg-container;
+  border-radius: $mp-border-radius-lg;
+}
+
+.cover {
+  margin-top: -1px;
+  margin-inline-start: -1px;
+  margin-inline-end: -1px;
+
+  img {
+    border-radius: $mp-border-radius-lg $mp-border-radius-lg 0 0;
+  }
+}
+
+.body {
+  padding: $mp-padding-lg;
+  border-radius: 0 0 $mp-border-radius-lg $mp-border-radius-lg;
+}

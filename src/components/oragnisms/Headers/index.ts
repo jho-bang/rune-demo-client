@@ -1,7 +1,7 @@
 import { html, on, View } from "rune-ts";
 
 // components
-import { AvatarView } from "../../atoms/Avatar";
+import { AvatarView } from "../../atoms";
 import { BackBtnView } from "../BackBtn";
 
 // apis

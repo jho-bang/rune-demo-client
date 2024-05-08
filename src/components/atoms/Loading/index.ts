@@ -6,16 +6,25 @@ import style from "./style.module.scss";
 export interface LoadingProps {
   text?: string;
   opacity?: number;
-  isShow: boolean;
 }
 
 export class LoadingView extends View<LoadingProps> {
+  public show() {
+    const element = document.querySelector(`.${this}`) as HTMLDivElement;
+    element.style.display = "block";
+  }
+
+  public hide() {
+    const element = document.querySelector(`.${this}`) as HTMLDivElement;
+    element.style.display = "none";
+  }
+
   override template() {
     return html`
       <div
         class="${style["loading-wrapper"]} loading-wrapper"
         style="background-color: rgba(0,0,0,${this.data.opacity ||
-        0.5}); display: none"
+        0.5}); display: none;"
       >
         <div class="${style["loading-container"]}">
           <div class="${style["loading"]}"></div>
@@ -25,10 +34,5 @@ export class LoadingView extends View<LoadingProps> {
         </div>
       </div>
     `;
-  }
-
-  override redraw() {
-    this.element().style.display = this.data.isShow ? "block" : "none";
-    return this;
   }
 }
