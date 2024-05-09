@@ -1,0 +1,209 @@
+@startuml
+
+
+Class LoginPage<Props> {
+    +override template(): html
+}
+
+Class HomePage<Props> {
+    +images: IDemoItem[]
+    +profile: IProfile
+
+    +override template(Props): html
+}
+
+Class DetailPage<Props> {
+    +props item: IDemoItem
+    +props profile: IProfile
+
+    +override template(Props): html}
+}
+
+Class BackBtnView<Props> {
+   +override template(Props): html
+}
+
+Class ArrowButtonView<Props> {
+    +props direction: "left" | "right"
+    +props onClick?: () => void
+    +props type?: ButtonType
+    +props size?: ButtonSize
+
+    +override template(Props): html
+}
+
+Class AvatarView<Props> {
+    +props thumbnail_url?: string
+    +props classes?: string
+    +props size?: "large" | "default" | "small"
+
+    +override onMount(): void
+    +override template(Props): html
+}
+
+Class HeaderView<Props> {
+    +props profile: IProfile
+    +props is_back?: boolean
+
+    +override template(Props): html
+}
+
+Class ImageListView<Props, ImageItemView> {
+    +override ItemView: ImageItemView
+}
+
+Class ImageItemView<Props> {
+    +props origin_src: string
+    +props is_like: boolean
+    +props id: number
+
+    -@on('click', item)
+    -@on('click', heart)
+
+    -heartToggle(): void
+    +override template(Props): html
+}
+
+Class HeartView<Props> {
+    +props is_like: boolean
+    +override template(Props): html
+}
+
+Class FloatListView<Props> {
+    +props itme: IDemoItem
+    +props download(): void
+    +props erase(): void
+    +props showOrigin(): void
+    +props removeBG(): void
+
+    -onDownload(): void
+    -onShowOrigin(): void
+    -onRemoveBG(): void
+    -onRrase(): void
+
+    +override template(Props): html
+}
+
+Class FloatButtonView<Props> {
+    +props children
+    +props bottom?: number
+    +props right?: number
+    +props onClick?: () => void
+
+    +override onMount(): void
+    +override template(Props): html
+}
+
+Class ImageSelectButton<Props> {
+    +props text: string
+    +props accept: string;
+    +props file?: File
+    -uploadElemId: string
+
+    -@on('change', input)
+    -onClick(): void
+    -onUpload(file: File): number
+    -onFileChange(file: File): boolean
+    +override template(Props): html
+}
+
+Class ButtonIcon<Props> {
+    +props type?: ButtonType
+    +props size?: ButtonSize
+    +props onClick?:() => void
+    +props icon: Html
+    +props classes?: string
+
+    +override onMount(): void
+    +override template(Props): html
+}
+
+Class EditorView<Props> {
+    +props item: IDemoItem
+    -loadingView: LoadingView
+    -brushCanvasView: BrushCanvasView
+    -imageCanvasView: ImageCanvasView
+    -isShowOrigin: boolean = false
+
+    -showLoadingView(): void
+    -hideLoadingView(): void
+    -draw(src: string): void
+
+    +download(): void
+    +erase(): void
+    +showOrigin(): void
+    +removeBG(): void
+
+    +override template(Props): html
+}
+
+Class LoadingView<Props> {
+    +props text?: string
+    +props opacity?: number
+
+    +show(): void
+    +hide(): void
+
+    +override template(Props): html
+}
+
+Class BrushCanvasView<Props> {
+    +props item: IDemoItem
+
+    -@on('mousedown')
+    -@on('mouseup')
+    -@on('mousemove')
+    -init(image: HTMLImageElement): void
+
+    +getData(): { canvas, base64, ctx }
+    +clear(): void
+    +draw(image: HTMLImageElement): void
+
+    +override onMount(): void
+    +override template(Props): html
+}
+
+Class ImageCanvasView<Props> {
+    +props item: IDemoItem
+    +beforeImage: string;
+    +currentImage: sting
+
+    -init(image: HTMLImageElement): void
+
+    +getData(): { canvas, base64, ctx }
+    +clear(): void
+    +draw(image: HTMLImageElement): void
+
+    +override onMount(): void
+    +override template(Props): html
+}
+
+HomePage *-- HeaderView : contains
+HeaderView *-- BackBtnView : contains
+BackBtnView *-- ArrowButtonView : contains
+HeaderView *-- AvatarView : contains
+
+ImageListView <-- ImageItemView : extends
+ImageItemView *-- HeartView : contains
+
+HomePage *-- ImageListView : contains
+
+HomePage *-- FloatButtonView : contains
+FloatButtonView *-- ImageSelectButton : contains
+ImageSelectButton *-- ButtonIcon : contains
+
+DetailPage *-- HeaderView : contains
+FloatListView *-- FloatButtonView : contains
+
+DetailPage *-- EditorView : contains
+DetailPage *-- FloatListView : contains
+
+EditorView *-- LoadingView : contains
+EditorView *-- ImageCanvasView : contains
+EditorView *-- BrushCanvasView : contains
+
+EditorView --- FloatListView : download, erase, showOrigin, removeBG >
+
+
+
+@enduml

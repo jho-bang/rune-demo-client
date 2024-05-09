@@ -2,7 +2,7 @@ import type { ILike } from "./types";
 
 import { BASE_URL, getCookie } from "../../shared";
 
-export const like_apis = {
+export const LikeApis = {
   async add(body: ILike) {
     const res = await fetch(`${BASE_URL}/api/v1/like/add`, {
       method: "POST",

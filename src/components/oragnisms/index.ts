@@ -6,3 +6,4 @@ export * from "./BackBtn";
 export * from "./ImageSelect";
 export * from "./ImageList";
 export * from "./ImageItem";
+export * from "./Editor";

@@ -4,7 +4,7 @@ import { html, View } from "rune-ts";
 import style from "./style.module.scss";
 
 import { getCookie, UserFillIcon } from "../../../shared";
-import { user_apis } from "../../../apis";
+import { UserApis } from "../../../apis";
 
 export interface IAvatarProps {
   thumbnail_url: string;
@@ -17,7 +17,7 @@ export class AvatarView extends View<IAvatarProps> {
     this.element().addEventListener("click", async () => {
       const access_token = getCookie("access_token");
       if (access_token) {
-        await user_apis.logout(access_token);
+        await UserApis.logout(access_token);
       }
       window.location.reload();
     });

@@ -8,9 +8,19 @@ import type {
 
 import { BASE_URL, getCookie, qs } from "../../shared";
 
-export const demo_apis = {
+export const DemoApis = {
   async getList(query: IGetDemoList = {}): Promise<IDemoList> {
     const res = await fetch(`${BASE_URL}/api/v1/demo?${qs(query)}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return await res.json();
+  },
+
+  async getMyList(query: IGetDemoList = {}): Promise<IDemoList> {
+    const res = await fetch(`${BASE_URL}/api/v1/demo/my/list?${qs(query)}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

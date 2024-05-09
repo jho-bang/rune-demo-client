@@ -9,7 +9,7 @@ import {
 } from "../../../shared";
 
 // atoms
-import { ButtonIcon, FloatButtonView } from "../../atoms";
+import { ButtonIcon, FloatButtonView, HeartView } from "../../atoms";
 
 import type { IDemoItem } from "../../../apis/demo/types";
 
@@ -25,19 +25,19 @@ interface Props {
 }
 
 export class FloatListView extends View<Props> {
-  onDownload = () => {
+  private onDownload = () => {
     this.data.download();
   };
 
-  onShowOrigin = () => {
+  private onShowOrigin = () => {
     this.data.showOrigin();
   };
 
-  onRemoveBG = () => {
+  private onRemoveBG = () => {
     this.data.removeBG();
   };
 
-  onRrase = () => {
+  private onRrase = () => {
     this.data.erase();
   };
 
@@ -46,8 +46,16 @@ export class FloatListView extends View<Props> {
       <div>
         <div>
           ${new FloatButtonView({
+            children: new HeartView({ is_liked: this.data.item.is_liked }),
+            right: 20,
+            bottom: 250,
+            onClick: this.onDownload,
+          })}
+        </div>
+        <div>
+          ${new FloatButtonView({
             children: new ButtonIcon({
-              klass: style.ButtonIcon,
+              classes: style.ButtonIcon,
               icon: ArrowDownIcon,
               type: "primary",
             }),
@@ -59,7 +67,7 @@ export class FloatListView extends View<Props> {
         <div>
           ${new FloatButtonView({
             children: new ButtonIcon({
-              klass: style.ButtonIcon,
+              classes: style.ButtonIcon,
               icon: SmileOutlineIcon,
               type: "primary",
             }),
@@ -71,7 +79,7 @@ export class FloatListView extends View<Props> {
         <div>
           ${new FloatButtonView({
             children: new ButtonIcon({
-              klass: style.ButtonIcon,
+              classes: style.ButtonIcon,
               icon: LaunchIcon,
               type: "primary",
             }),
@@ -83,7 +91,7 @@ export class FloatListView extends View<Props> {
         <div>
           ${new FloatButtonView({
             children: new ButtonIcon({
-              klass: style.ButtonIcon,
+              classes: style.ButtonIcon,
               icon: WikiEditIcon,
               type: "primary",
             }),

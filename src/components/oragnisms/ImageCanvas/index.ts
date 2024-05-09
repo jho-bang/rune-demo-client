@@ -32,7 +32,7 @@ export class ImageCanvasView extends View<Props> {
     this.init(image, image);
   }
 
-  init(image: HTMLImageElement, newImage?: HTMLImageElement) {
+  private init(image: HTMLImageElement, newImage?: HTMLImageElement) {
     const { ctx } = this.getData();
 
     const { resizeWidth, resizeHeight } = resizeImage(

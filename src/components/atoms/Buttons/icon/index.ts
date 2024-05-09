@@ -8,7 +8,7 @@ export interface IconButtonProps {
   size?: ButtonSize;
   onClick?: () => void;
   icon: Html | string;
-  klass?: string;
+  classes?: string;
 }
 
 export class ButtonIcon extends View<IconButtonProps> {
@@ -19,12 +19,12 @@ export class ButtonIcon extends View<IconButtonProps> {
   }
 
   override template({
-    klass = "",
+    classes = "",
     size = "default",
     type = "default",
   }: IconButtonProps) {
     return html`<button
-      class="${klass} ${style.mp_btn} ${style[type]} ${style[size]}"
+      class="${classes} ${style.mp_btn} ${style[type]} ${style[size]}"
     >
       ${this.data.icon}
     </button> `;

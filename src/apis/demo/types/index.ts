@@ -14,13 +14,24 @@ export interface IDemoList {
   data: IDemoItem[];
 }
 
+export interface IDemoItemLikes {
+  like_id: number;
+  created: Date;
+  user_info: {
+    user_id: number;
+    username: string;
+    thumbnail_url: string;
+  };
+}
+
 export interface IDemoItem {
   id: number;
   origin_src: string;
   created: Date;
   updated?: Date;
   liked_cnt: number;
-  is_like: boolean;
+  is_liked: boolean;
+  likes: IDemoItemLikes[];
 }
 
 export interface IGetDemoList {

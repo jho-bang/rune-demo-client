@@ -10,3 +10,17 @@
     border-color: transparent !important;
   }
 }
+
+.heart {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 1.5rem;
+  height: 1.5rem;
+
+  color: $mp-color-text-description;
+}
+
+.image {
+  width: 100%;
+}

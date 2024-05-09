@@ -7,7 +7,7 @@ import { BrushCanvasView } from "../BrushCanvas";
 import { LoadingView } from "../../atoms";
 
 import type { IDemoItem } from "../../../apis/demo/types";
-import { demo_apis, inpaint, removeBG } from "../../../apis";
+import { DemoApis, AiApis } from "../../../apis";
 
 import { BASE_URL, convertURLtoFile, loadImage } from "../../../shared";
 
@@ -20,12 +20,12 @@ export class EditorView extends View<Props> {
   private brushCanvasView = new BrushCanvasView({ item: this.data.item });
   private imageCanvasView = new ImageCanvasView({ item: this.data.item });
 
-  public isShowOrigin: boolean = false;
+  private isShowOrigin: boolean = false;
 
-  public showLoadingView() {
+  private showLoadingView() {
     this.loadingView.show();
   }
-  public hideLoadingView() {
+  private hideLoadingView() {
     this.loadingView.hide();
   }
 
@@ -49,7 +49,7 @@ export class EditorView extends View<Props> {
 
       const { base64: brush_base64 } = this.brushCanvasView.getData();
 
-      const blob = await inpaint({
+      const blob = await AiApis.inpaint({
         width: image_canvas.width,
         height: image_canvas.height,
         image: image_base64,
@@ -57,8 +57,8 @@ export class EditorView extends View<Props> {
       });
 
       const new_file = new File([blob], "new_file", { type: blob.type });
-      const res = await demo_apis.upload(new_file);
-      await demo_apis.insert({ origin_src: res.path });
+      const res = await DemoApis.upload(new_file);
+      await DemoApis.insert({ origin_src: res.path });
       const src = URL.createObjectURL(blob);
       await this.draw(src);
     } catch (e) {
@@ -84,10 +84,12 @@ export class EditorView extends View<Props> {
   public removeBG = async () => {
     try {
       this.showLoadingView();
-      const blob = await removeBG(`${this.imageCanvasView.currentImage}`);
+      const blob = await AiApis.removeBG(
+        `${this.imageCanvasView.currentImage}`,
+      );
       const newFile = new File([blob], "new_file", { type: blob.type });
-      const { path } = await demo_apis.upload(newFile);
-      await demo_apis.insert({ origin_src: path });
+      const { path } = await DemoApis.upload(newFile);
+      await DemoApis.insert({ origin_src: path });
       const src = URL.createObjectURL(blob);
       await this.draw(src);
     } catch (e) {

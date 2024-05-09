@@ -2,7 +2,7 @@ import { html, on, View } from "rune-ts";
 
 // shared
 import { BASE_URL } from "../../../shared";
-import { like_apis } from "../../../apis";
+import { LikeApis } from "../../../apis";
 
 // atoms
 import { HeartView } from "../../atoms";
@@ -12,7 +12,7 @@ import style from "./style.module.scss";
 
 export interface IImageItemProps {
   origin_src: string;
-  is_like: boolean;
+  is_liked: boolean;
   id: number;
 }
 
@@ -25,29 +25,28 @@ export class ImageItemView extends View<IImageItemProps> {
 
   @on("click", `.${style.heart}`)
   private async _onLike() {
-    if (this.data.is_like) {
-      this.data.is_like = false;
-      await like_apis.remove({ demo_id: this.data.id });
+    if (this.data.is_liked) {
+      this.data.is_liked = false;
+      await LikeApis.remove({ demo_id: this.data.id });
     } else {
-      this.data.is_like = true;
-      await like_apis.add({ demo_id: this.data.id });
+      this.data.is_liked = true;
+      await LikeApis.add({ demo_id: this.data.id });
     }
 
     this.heartToggle();
   }
 
-  heartToggle() {
+  private heartToggle() {
     const heart = this.element().querySelector(`.${style.heart}`);
     heart!.innerHTML = "";
-    heart!.append(new HeartView({ is_like: this.data.is_like }).render());
-    return this;
+    heart!.append(new HeartView({ is_liked: this.data.is_liked }).render());
   }
 
   override template() {
     return html`
       <div class="${style.imageItem} grid-item">
         <div class="${style.heart}">
-          ${new HeartView({ is_like: this.data.is_like })}
+          ${new HeartView({ is_liked: this.data.is_liked })}
         </div>
         <img
           src="${BASE_URL}/${this.data.origin_src}"

@@ -2,8 +2,7 @@
 import { Page, html } from "rune-ts";
 
 // components
-import { FloatListView, HeaderView } from "../../components";
-import { EditorView } from "../../components/oragnisms/Editor";
+import { FloatListView, HeaderView, EditorView } from "../../components";
 
 // apis
 import type { IDemoItem } from "../../apis/demo/types";
@@ -28,7 +27,7 @@ export class DetailPage extends Page<Props> {
           erase: this.editorView.erase,
           showOrigin: this.editorView.showOrigin,
           removeBG: this.editorView.removeBG,
-        })}}
+        })}
       </div>
     `;
   }

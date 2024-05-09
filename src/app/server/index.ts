@@ -1,6 +1,6 @@
 import { type LayoutData, MetaView, app } from "@rune-ts/server";
 import { ClientRouter } from "../routes";
-import { demo_apis, user_apis } from "../../apis";
+import { DemoApis, UserApis } from "../../apis";
 import { getServerCookie, qs, wrapAsyncMiddleware } from "../../shared";
 import dotenv from "dotenv";
 
@@ -26,19 +26,15 @@ server.get(
     }
 
     const access_token = cookie.split("=")[1];
-    const profile = await user_apis.profile(access_token);
+    const profile = await UserApis.profile(access_token);
 
-    const { data } = await demo_apis.getList({
+    const { data = [] } = await DemoApis.getList({
       user_id: profile.data.id,
     });
 
     const html = new MetaView(
       ClientRouter[""]({
-        images: data.map((item) => ({
-          ...item,
-          is_like: Boolean(Number(item.is_like)),
-          liked_cnt: Number(item.liked_cnt || 0),
-        })),
+        images: data,
         profile,
       }),
       res.locals.layoutData,
@@ -59,10 +55,10 @@ server.get(
     }
 
     const access_token = cookie.split("=")[1];
-    const profile = await user_apis.profile(access_token);
+    const profile = await UserApis.profile(access_token);
 
     const id = Number(req.query.id);
-    const item = await demo_apis.getById(id);
+    const item = await DemoApis.getById(id);
 
     const html = new MetaView(
       ClientRouter["/detail"]({

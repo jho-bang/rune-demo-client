@@ -2,7 +2,7 @@ import type { IProfile } from "./types";
 
 import { BASE_URL } from "../../shared";
 
-export const user_apis = {
+export const UserApis = {
   async profile(access_token: string): Promise<IProfile> {
     const res = await fetch(`${BASE_URL}/api/v1/user/profile`, {
       method: "GET",

@@ -11,7 +11,7 @@ import { EditorAddIcon, SIZE_10MB } from "../../../shared";
 import { ButtonIcon } from "../../atoms";
 
 // apis
-import { demo_apis } from "../../../apis";
+import { DemoApis } from "../../../apis";
 
 interface Props {
   text: string;
@@ -20,7 +20,7 @@ interface Props {
 }
 
 export class ImageSelectButton extends View<Props> {
-  uploadElemId = `file-upload-${Math.random().toString()}`;
+  private uploadElemId = `file-upload-${Math.random().toString()}`;
 
   @on("change", `.${style.hidden}`)
   private async _onChange(ev: Event) {
@@ -44,8 +44,8 @@ export class ImageSelectButton extends View<Props> {
   };
 
   private async onUpload(file: File) {
-    const { path } = await demo_apis.upload(file);
-    const { data } = await demo_apis.insert({ origin_src: path });
+    const { path } = await DemoApis.upload(file);
+    const { data } = await DemoApis.insert({ origin_src: path });
     return data[0].id;
   }
 
@@ -77,7 +77,7 @@ export class ImageSelectButton extends View<Props> {
 
           <div>
             ${new ButtonIcon({
-              klass: style.ButtonIcon,
+              classes: style.ButtonIcon,
               icon: EditorAddIcon,
               type: "primary",
               onClick: this.onClick,

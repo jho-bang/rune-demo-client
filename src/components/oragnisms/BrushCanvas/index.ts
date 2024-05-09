@@ -67,7 +67,7 @@ export class BrushCanvasView extends View<Props> {
     this.init(image);
   }
 
-  init(image: HTMLImageElement) {
+  private init(image: HTMLImageElement) {
     const { ctx } = this.getData();
 
     const { resizeWidth, resizeHeight } = resizeImage(
