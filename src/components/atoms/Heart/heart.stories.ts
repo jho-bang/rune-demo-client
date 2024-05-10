@@ -4,7 +4,7 @@ export default {
   title: "Heart",
   tags: ["autodocs"],
   argTypes: {
-    is_like: { control: "boolean" },
+    is_liked: { control: "boolean" },
   },
   render: (args: IHeartProps) => {
     return new HeartView(args).render();
@@ -12,7 +12,7 @@ export default {
 };
 
 const stories: IHeartProps = {
-  is_like: false,
+  is_liked: false,
 };
 
 export const heart = {

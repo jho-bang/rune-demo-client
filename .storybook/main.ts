@@ -1,5 +1,6 @@
 import type { StorybookConfig } from "@storybook/html-webpack5";
 import { createHash } from "node:crypto";
+import * as path from "node:path";
 
 const getLocalIdent = (
   context: any,
@@ -37,6 +38,14 @@ const config: StorybookConfig = {
                 },
               },
               "sass-loader",
+              {
+                loader: "sass-resources-loader",
+                options: {
+                  resources: [
+                    path.resolve(__dirname, "../src/app/style/base.scss"),
+                  ],
+                },
+              },
             ],
           },
           {

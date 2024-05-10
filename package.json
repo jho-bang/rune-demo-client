@@ -38,6 +38,7 @@
     "@types/express-serve-static-core": "^4.19.0",
     "css-loader": "^6.10.0",
     "sass-loader": "^14.1.0",
+    "sass-resources-loader": "^2.2.5",
     "storybook": "^7.6.16",
     "style-loader": "^3.3.4",
     "webpack": "^5.90.1"
