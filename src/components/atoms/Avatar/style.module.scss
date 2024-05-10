@@ -5,7 +5,7 @@
   overflow: hidden;
 
   color: $mp-avatar-group-border-color;
-  border: 1px solid $mp-avatar-group-border-color;
+  background-color: $mp-color-text-placeholder;
 
   &.large {
     width: $mp-avatar-container-size-lg;

@@ -98,3 +98,51 @@ export function wrapAsyncMiddleware(fn) {
     fn(req, res, next).catch(next);
   };
 }
+
+export function extHexToRGB(hex: string, alpha?: number) {
+  if (!hex) return "";
+
+  let r = parseInt(hex.slice(1, 3), 16),
+    g = parseInt(hex.slice(3, 5), 16),
+    b = parseInt(hex.slice(5, 7), 16);
+
+  if (alpha) {
+    return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+  } else {
+    return "rgb(" + r + ", " + g + ", " + b + ")";
+  }
+}
+
+export function darkenColor(color: string, percent: number) {
+  if (!color) return "";
+
+  let f = parseInt(color.slice(1), 16), // HEX를 정수로 변환
+    R = f >> 16, // 빨간색 값 추출
+    G = (f >> 8) & 0x00ff, // 초록색 값 추출
+    B = f & 0x0000ff; // 파란색 값 추출
+
+  // 어두운 색 계산: 각 색상 값에서 percent만큼 감소
+  R = Math.floor((R * (100 - percent)) / 100);
+  G = Math.floor((G * (100 - percent)) / 100);
+  B = Math.floor((B * (100 - percent)) / 100);
+
+  // 다시 HEX 형식으로 변환하여 리턴
+  return "#" + ((1 << 24) + (R << 16) + (G << 8) + B).toString(16).slice(1);
+}
+
+export function lightenColor(color: string, percent: number) {
+  if (!color) return "";
+
+  let f = parseInt(color.slice(1), 16), // HEX를 정수로 변환
+    R = f >> 16, // 빨간색 값 추출
+    G = (f >> 8) & 0x00ff, // 초록색 값 추출
+    B = f & 0x0000ff; // 파란색 값 추출
+
+  // 밝은 색 계산: 각 색상 값을 증가
+  R = Math.floor(R + (255 - R) * (percent / 100));
+  G = Math.floor(G + (255 - G) * (percent / 100));
+  B = Math.floor(B + (255 - B) * (percent / 100));
+
+  // 다시 HEX 형식으로 변환하여 리턴
+  return "#" + ((1 << 24) + (R << 16) + (G << 8) + B).toString(16).slice(1);
+}

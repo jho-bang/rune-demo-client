@@ -5,12 +5,25 @@ export default {
   title: "Button",
   tags: ["autodocs"],
   argTypes: {
-    type: {
-      options: ["primary", "default", "danger"],
+    label: { control: "text" },
+    variant: {
+      options: [
+        "Default",
+        "Filled",
+        "Light",
+        "Outline",
+        "Subtle",
+        "Transparent",
+      ],
       control: { type: "select" },
     },
+    color: { control: "color" },
     size: {
-      options: ["large", "default", "small"],
+      options: ["xs", "sm", "md", "lg", "xl"],
+      control: { type: "select" },
+    },
+    radius: {
+      options: ["xs", "sm", "md", "lg", "xl"],
       control: { type: "select" },
     },
     onClick: { action: "clicked" },
@@ -21,9 +34,11 @@ export default {
 };
 
 const stories: DefaultBtnProps = {
-  text: "Button",
-  type: "default",
-  size: "default",
+  label: "Button",
+  variant: "Filled",
+  size: "md",
+  radius: "md",
+  color: "#4f5ee8",
   onClick: action("clicked"),
 };
 

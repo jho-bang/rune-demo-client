@@ -1,15 +1,24 @@
 import { View, html } from "rune-ts";
 
 import style from "./style.module.scss";
+import { darkenColor, extHexToRGB, lightenColor } from "../../../../shared";
 
-export type ButtonType = "default" | "primary" | "danger";
-export type ButtonSize = "small" | "default" | "large";
+export type ButtonType =
+  | "Default"
+  | "Filled"
+  | "Light"
+  | "Outline"
+  | "Subtle"
+  | "Transparent";
+export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 export interface DefaultBtnProps {
-  text: HTMLElement | string;
+  label: string;
   onClick?: () => void;
-  type?: ButtonType;
-  size?: ButtonSize;
+  variant: ButtonType;
+  size: ButtonSize;
+  color: string;
+  radius: ButtonSize;
 }
 
 export class ButtonDefault extends View<DefaultBtnProps> {
@@ -20,13 +29,25 @@ export class ButtonDefault extends View<DefaultBtnProps> {
   }
 
   override template({
-    size = "default",
-    text,
-    type = "default",
+    size = "md",
+    label,
+    color = "",
+    radius = "md",
+    variant = "Default",
   }: DefaultBtnProps) {
     return html`
-      <button class="${style.mp_btn} ${style[type]} ${style[size]}">
-        ${text}
+      <button
+        class="${style.mp_btn} ${style[variant]} ${style[size]} ${style[
+          `radius-${radius}`
+        ]}"
+        style="--mp-color: ${extHexToRGB(
+          color,
+        )}; --mp-darken-color: ${darkenColor(
+          color,
+          20,
+        )}; --mp-lighten-color: ${lightenColor(color, 80)}"
+      >
+        ${label}
       </button>
     `;
   }

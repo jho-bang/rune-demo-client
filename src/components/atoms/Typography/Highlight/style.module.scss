@@ -1,0 +1,7 @@
+.container {
+  $mp-color: var(--mp-color);
+
+  & .highlight {
+    background-color: $mp-color;
+  }
+}

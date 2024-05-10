@@ -1,3 +1,18 @@
+.heart {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  color: $mp-color-white;
+}
+
+.off {
+  color: $mp-color-white;
+}
+
 .on {
   color: $mp-red-5;
 }

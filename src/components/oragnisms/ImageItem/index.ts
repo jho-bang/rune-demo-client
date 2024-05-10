@@ -17,6 +17,8 @@ export interface IImageItemProps {
 }
 
 export class ImageItemView extends View<IImageItemProps> {
+  heartView = new HeartView({ is_liked: this.data.is_liked });
+
   @on("click", `.${style.image}`)
   private async _click() {
     const id = this.data.id;
@@ -26,28 +28,18 @@ export class ImageItemView extends View<IImageItemProps> {
   @on("click", `.${style.heart}`)
   private async _onLike() {
     if (this.data.is_liked) {
-      this.data.is_liked = false;
       await LikeApis.remove({ demo_id: this.data.id });
     } else {
-      this.data.is_liked = true;
       await LikeApis.add({ demo_id: this.data.id });
     }
 
-    this.heartToggle();
-  }
-
-  private heartToggle() {
-    const heart = this.element().querySelector(`.${style.heart}`);
-    heart!.innerHTML = "";
-    heart!.append(new HeartView({ is_liked: this.data.is_liked }).render());
+    this.data.is_liked = this.heartView.toggle();
   }
 
   override template() {
     return html`
-      <div class="${style.imageItem} grid-item">
-        <div class="${style.heart}">
-          ${new HeartView({ is_liked: this.data.is_liked })}
-        </div>
+      <div class="${style.imageItem}">
+        <div class="${style.heart}">${this.heartView}</div>
         <img
           src="${BASE_URL}/${this.data.origin_src}"
           alt="상품 썸네일"

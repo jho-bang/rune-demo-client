@@ -1,55 +1,127 @@
 .mp_btn {
-  font-size: $mp-button-content-font-size;
-  line-height: 1;
-  padding: $mp-button-padding-block $mp-button-padding-inline;
-  border-radius: $mp-border-radius;
-  box-shadow: $mp-button-default-shadow;
+  $mp-color: var(--mp-color);
+  $mp-darken-color: var(--mp-darken-color);
+  $mp-lighten-color: var(--mp-lighten-color);
 
-  background-color: $mp-button-default-bg;
-  border: $mp-line-width $mp-line-type transparent;
+  $mp-border-radius-xs: 0.125rem;
+  $mp-border-radius-sm: 0.25rem;
+  $mp-border-radius-md: 0.5rem;
+  $mp-border-radius-lg: 1rem;
+  $mp-border-radius-xl: 2rem;
+
+  $mp-padding-xs: 0.3rem;
+  $mp-padding-sm: 0.5rem;
+  $mp-padding-md: 0.7rem;
+  $mp-padding-lg: 0.9rem;
+  $mp-padding-xl: 1.1rem;
+
+  $mp-font-size-xs: 0.75rem;
+  $mp-font-size-sm: 0.875rem;
+  $mp-font-size-md: 1rem;
+  $mp-font-size-lg: 1.125rem;
+  $mp-font-size-xl: 1.25rem;
+
   cursor: pointer;
-  transition: all $mp-motion-duration-mid $mp-motion-ease-in-out;
   user-select: none;
-  touch-action: manipulation;
-  color: $mp-color-text;
 
-  &:hover {
-    border-color: $mp-blue;
-    color: $mp-blue;
+  &:active {
+    transform: translateY(2px);
   }
 
-  &.primary {
-    color: $mp-button-primary-color;
-    background-color: $mp-color-primary;
-    box-shadow: $mp-button-primary-shadow;
+  &.Default {
+    background-color: white;
+    border-color: #eee;
 
     &:hover {
-      color: $mp-color-primary-hover;
-      background-color: $mp-color-primary-bg-hover;
+      background-color: #eee;
     }
   }
 
-  &.danger {
-    color: $mp-color-error;
-    border-color: $mp-color-error;
-    box-shadow: $mp-button-danger-shadow;
+  &.Filled {
+    color: white;
+    border: 1px solid transparent;
+    background-color: $mp-color;
 
     &:hover {
-      color: $mp-color-error-hover;
-      border-color: $mp-color-error-hover;
+      background-color: $mp-darken-color;
     }
   }
-}
 
-.large {
-  font-size: $mp-button-content-font-size-lg;
-  line-height: $mp-control-height-lg;
-  padding: $mp-button-padding-block-lg $mp-button-padding-inline-lg;
-  border-radius: $mp-border-radius-lg;
-}
+  &.Light {
+    color: $mp-color;
+    border: 1px solid transparent;
+    background-color: $mp-lighten-color;
+  }
 
-.small {
-  font-size: $mp-button-content-font-size-sm;
-  padding: $mp-button-padding-block-sm $mp-button-padding-inline-sm;
-  border-radius: $mp-border-radius-sm;
+  &.Outline {
+    color: $mp-color;
+    border: 1px solid $mp-color;
+    background-color: white;
+    box-sizing: border-box;
+
+    &:hover {
+      background-color: $mp-lighten-color;
+    }
+  }
+
+  &.Subtle {
+    color: $mp-color;
+    border: 1px solid transparent;
+    background-color: transparent;
+
+    &:hover {
+      background-color: $mp-lighten-color;
+    }
+  }
+
+  &.Transparent {
+    color: $mp-color;
+    border: 1px solid transparent;
+    background-color: transparent;
+  }
+
+  &.xs {
+    font-size: $mp-font-size-xs;
+    padding: $mp-padding-xs calc($mp-padding-xs * 1.5);
+  }
+
+  &.sm {
+    font-size: $mp-font-size-sm;
+    padding: $mp-padding-sm calc($mp-padding-sm * 1.5);
+  }
+
+  &.md {
+    font-size: $mp-font-size-md;
+    padding: $mp-padding-md calc($mp-padding-md * 1.5);
+  }
+
+  &.lg {
+    font-size: $mp-font-size-lg;
+    padding: $mp-padding-lg calc($mp-padding-lg * 1.5);
+  }
+
+  &.xl {
+    font-size: $mp-font-size-xl;
+    padding: $mp-padding-xl calc($mp-padding-xl * 1.5);
+  }
+
+  &.radius-xs {
+    border-radius: $mp-border-radius-xs;
+  }
+
+  &.radius-sm {
+    border-radius: $mp-border-radius-sm;
+  }
+
+  &.radius-md {
+    border-radius: $mp-border-radius-md;
+  }
+
+  &.radius-lg {
+    border-radius: $mp-border-radius-lg;
+  }
+
+  &.radius-xl {
+    border-radius: $mp-border-radius-xl;
+  }
 }

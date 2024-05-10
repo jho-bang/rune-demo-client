@@ -15,6 +15,7 @@ import type { IDemoItem } from "../../../apis/demo/types";
 
 // style
 import style from "./style.module.scss";
+import { LikeApis } from "../../../apis";
 
 interface Props {
   item: IDemoItem;
@@ -25,6 +26,9 @@ interface Props {
 }
 
 export class FloatListView extends View<Props> {
+  is_liked: boolean = this.data.item.is_liked;
+  heartView = new HeartView({ is_liked: this.is_liked });
+
   private onDownload = () => {
     this.data.download();
   };
@@ -41,15 +45,25 @@ export class FloatListView extends View<Props> {
     this.data.erase();
   };
 
-  override template() {
+  private onClickLike = async () => {
+    if (this.is_liked) {
+      await LikeApis.remove({ demo_id: this.data.item.id });
+    } else {
+      await LikeApis.add({ demo_id: this.data.item.id });
+    }
+
+    this.is_liked = this.heartView.toggle();
+  };
+
+  override template({ item }: Props) {
     return html`
       <div>
-        <div>
+        <div class="like_float_button">
           ${new FloatButtonView({
-            children: new HeartView({ is_liked: this.data.item.is_liked }),
+            children: this.heartView,
             right: 20,
             bottom: 250,
-            onClick: this.onDownload,
+            onClick: this.onClickLike,
           })}
         </div>
         <div>
