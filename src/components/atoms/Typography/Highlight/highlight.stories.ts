@@ -19,6 +19,6 @@ const stories: IHighlightProps = {
   color: "#c0abff",
 };
 
-export const HighLight_Typography = {
+export const Highlight_Typography = {
   args: stories,
 };
