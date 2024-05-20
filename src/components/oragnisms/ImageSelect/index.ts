@@ -79,7 +79,7 @@ export class ImageSelectButton extends View<Props> {
             ${new ButtonIcon({
               classes: style.ButtonIcon,
               icon: EditorAddIcon,
-              type: "primary",
+              type: "Filled",
               onClick: this.onClick,
             })}
           </div>

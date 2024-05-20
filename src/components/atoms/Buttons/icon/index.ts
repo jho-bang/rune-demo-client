@@ -20,8 +20,8 @@ export class ButtonIcon extends View<IconButtonProps> {
 
   override template({
     classes = "",
-    size = "default",
-    type = "default",
+    size = "md",
+    type = "Filled",
   }: IconButtonProps) {
     return html`<button
       class="${classes} ${style.mp_btn} ${style[type]} ${style[size]}"
